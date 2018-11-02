@@ -1,0 +1,456 @@
+<%
+  last_section = false
+  navigation = [
+    {
+      section: "Introduction",
+    },
+    {
+      label: "What is Ornament?",
+      url: styleguide_path,
+      keywords: "philosphy,styleguide,help,framework",
+    },
+    {
+      label: "Getting started",
+      url: "/styleguide/getting_started",
+      keywords: "generate,generator,generating",
+    },
+    {
+      label: "JQueryUI",
+      url: "/styleguide/jquery_ui",
+      keywords: "datepicker",
+    },
+
+
+    {
+      section: "Layout",
+    },
+    {
+      label: "Koi integration",
+      url: "/styleguide/koi_settings",
+      keywords: "cms",
+    },
+    {
+      label: "Page layouts",
+      url: "/styleguide/page_layouts",
+      keywords: "template,global,application",
+    },
+    {
+      label: "Environment banner",
+      url: "/styleguide/environment",
+      keywords: "staging,development,warning",
+    },
+    {
+      label: "SEO partial",
+      url: "/styleguide/seo",
+      keywords: "search,engine,meta,tag,facebook,twitter",
+    },
+    {
+      label: "Service worker and webmanifest",
+      url: "/styleguide/service_worker",
+      keywords: "pwa,mobile,app",
+    },
+    {
+      label: "Flash messages",
+      url: "/styleguide/flash",
+      keywords: "global,alert,info,popup",
+    },
+    {
+      label: "Modal routes",
+      url: "/styleguide/lightbox_routes",
+      keywords: "ajax,lightbhox",
+    },
+    {
+      label: "Skip to content link",
+      url: "/styleguide/skip_link",
+    },
+    {
+      label: "Fixed footer",
+      url: "/styleguide/fixed_footer",
+      keywords: "sticky",
+    },
+    {
+      label: "Building a view",
+      url: "/styleguide/building_a_view",
+      keywords: "meta,started,page,show",
+    },
+    {
+      label: "Image optimisations",
+      url: "/styleguide/images",
+      keywords: "dragonfly,compression,orientation,encoding,lazyloading"
+    },
+
+    
+    {
+      section: "Navigation"
+    },
+    {
+      label: "Simple Navigation renderer",
+      url: "/styleguide/navigation",
+      keywords: "simple navigation,menu",
+    },
+    {
+      label: "Menu with more",
+      url: "/styleguide/menu_with_more",
+      keywords: "responsive,hide,navigation",
+    },
+    {
+      label: "Page navigation",
+      url: "/styleguide/page_navigation",
+      keywords: "subnavigation,koi,cms",
+    },
+    {
+      label: "Tray navigation (Overlay)",
+      url: "/styleguide/overlay_navigation",
+      keywords: "mobile,menu",
+    },
+    {
+      label: "Tray navigation (Push)",
+      url: "/styleguide/push_navigation",
+      keywords: "mobile,menu",
+    },
+
+
+    {
+      section: "Rails",
+    },
+    {
+      label: "SVG Icons",
+      url: "/styleguide/icons",
+      keywords: "grunticon,helpers,rails",
+    },
+    {
+      label: "Rails helpers",
+      url: "/styleguide/rails_helpers",
+      keywords: "yes or no,link,country,svg,optimised jpg,static map,datetime formats,koi,navitem,cms"
+    },
+    {
+      label: "Devise views",
+      url: "/styleguide/devise",
+      keywords: "user,login,session",
+    },
+
+
+    {
+      section: "CSS classes and helpers",
+    },
+    {
+      label: "Align",
+      url: "/styleguide/align",
+      keywords: "text,center,centre",
+    },
+    {
+      label: "Background",
+      url: "/styleguide/bg_helpers",
+      keywords: "colours,alert,warning"
+    },
+    # {
+    #   label: "Flexbox",
+    #   disabled: true,
+    #   keywords: "",
+    # },
+    {
+      label: "Nested link",
+      url: "/styleguide/nested_link",
+      keywords: "cards,fake link",
+    },
+    {
+      label: "Round",
+      url: "/styleguide/round",
+      keywords: "border-radius,circle,button,image",
+    },
+    {
+      label: "Spacing",
+      url: "/styleguide/spacing",
+      keywords: "layout,structure",
+    },
+
+
+    {
+      section: "Typography",
+    },
+    {
+      label: "Headings",
+      url: "/styleguide/typography_headings",
+      keywords: "type,link,colour,text,heading,body,layout,spacing",
+    },
+    {
+      label: "Normal content",
+      url: "/styleguide/typography_normal",
+      keywords: "type,link,colour,text,heading,body,layout,spacing",
+    },
+    {
+      label: "Compressed content",
+      url: "/styleguide/typography_compressed",
+      keywords: "type,link,colour,text,heading,body,layout,spacing",
+    },
+    {
+      label: "Colours and inline styles",
+      url: "/styleguide/typography_inline",
+      keywords: "type,link,colour,text,heading,body,layout,spacing",
+    },
+    {
+      label: "Lists",
+      url: "/styleguide/typography_lists",
+      keywords: "type,link,colour,text,heading,body,layout,spacing",
+    },
+
+
+    {
+      section: "Forms",
+    },
+    {
+      label: "Form styling",
+      url: "/styleguide/form",
+      keywords: "field,input,textarea",
+    },
+    {
+      label: "Inline fields and caps",
+      url: "/styleguide/form_inline",
+    },
+    {
+      label: "Text limiter",
+      url: "/styleguide/form_limiter",
+    },
+    {
+      label: "Password revealer",
+      url: "/styleguide/form_password_revealer",
+    },
+    {
+      label: "Password score",
+      url: "/styleguide/form_password_score",
+    },
+    {
+      label: "Billing to shipping",
+      url: "/styleguide/form_billing_shipping",
+    },
+    {
+      label: "Cocoon template",
+      url: "/styleguide/form_cocoon",
+      keywords: "add more,remove,multiple"
+    },
+    {
+      label: "Image uploader",
+      url: "/styleguide/form_upload",
+      keywords: "gallery,file,jquery"
+    },
+    {
+      label: "Conditionally showing fields with ShowJS",
+      url: "/styleguide/showjs",
+      keywords: "show,hide,form,fields",
+    },
+
+
+    {
+      section: "UI Components",
+    },
+    {
+      label: "Blankstate",
+      url: "/styleguide/blankstate",
+      keywords: "well,emptystate",
+    },
+    {
+      label: "Button",
+      url: "/styleguide/button",
+    },
+    {
+      label: "Card",
+      url: "/styleguide/card",
+      keywords: "grid,tiles,listing",
+    },
+    {
+      label: "Carousel",
+      url: "/styleguide/carousel",
+      keywords: "gallery,fotorama,slider,banner,thumbnails",
+    },
+    {
+      label: "Dismiss",
+      url: "/styleguide/dismiss",
+      keywords: "hide,flash,close"
+    },
+    {
+      label: "Drilldown",
+      url: "/styleguide/drilldown",
+      keywords: "menu,navigation,jquery",
+    },
+    {
+      label: "Flexible Input",
+      url: "/styleguide/flexible_input",
+      keywords: "form,responsive,jquery",
+    },
+    {
+      label: "Heading with button",
+      url: "/styleguide/heading_with_button",
+      keywords: "structure,layout",
+    },
+    {
+      label: "Lightbox",
+      url: "/styleguide/lightbox",
+      keywords: "popup,modal,magnific popup,jquery"
+    },
+    {
+      label: "Map",
+      url: "/styleguide/map",
+      keywords: "google,leaflet,pin,marker",
+    },
+    {
+      label: "Pagination",
+      url: "/styleguide/pagination",
+      keywords: "kaminari",
+    },
+    {
+      label: "Panel",
+      url: "/styleguide/panel",
+      keywords: "structure,layout",
+    },
+    {
+      label: "Read more",
+      url: "/styleguide/read_more",
+      keywords: "reveal,show,hide,animation",
+    },
+    {
+      label: "Responsive embeds",
+      url: "/styleguide/embed",
+      keywords: "youtube,issuu,third party,iframe,aspect,ratio aware",
+    },
+    {
+      label: "ScrollTo",
+      url: "/styleguide/scrollto",
+      keywords: "animation,link",
+    },
+    {
+      label: "Select link",
+      url: "/styleguide/select_link",
+      keywords: "<select>,menu,list",
+    },
+    {
+      label: "Shifty",
+      url: "/styleguide/shifty",
+      keywords: "move,show,hide,responsive",
+    },
+    {
+      label: "Table",
+      url: "/styleguide/table",
+    },
+    {
+      label: "Tabs",
+      url: "/styleguide/tabs",
+    },
+    {
+      label: "Toggle",
+      url: "/styleguide/toggle",
+      keywords: "show,hide,animation",
+    },
+    {
+      label: "Tooltip",
+      url: "/styleguide/tooltip",
+      keywords: "tippy,popup",
+    },
+    {
+      label: "Transition toggle",
+      url: "/styleguide/transition_toggle",
+      keywords: "show,hide,animation",
+    },
+
+
+    {
+      section: "SASS Mixins",
+    },
+    {
+      label: "Container",
+      url: "/styleguide/container",
+      keywords: "max-width,center,centre,structure,layout",
+    },
+    {
+      label: "Lists",
+      url: "/styleguide/lists",
+      keywords: "items,navigation,menu,listing",
+    },
+    {
+      label: "Media Queries",
+      url: "/styleguide/media_queries",
+      keywords: "responsive",
+    },
+    {
+      label: "Overlay",
+      url: "/styleguide/overlay",
+      keywords: "black,darken,fill",
+    },
+    {
+      label: "Spang Grids",
+      url: "/styleguide/spang",
+      keywords: "flexbox,float,system",
+    },
+    {
+      label: "Assorted sass mixins",
+      url: "/styleguide/sass_assorted",
+      keywords: "ratio aware sizing,link colour,decoration,placeholder,flush,disable mouse outline,app height"
+    },
+
+
+    {
+      section: "JS",
+    },
+    {
+      label: "Event tracking",
+      url: "/styleguide/event-tracking",
+      keywords: "analytics,google tag manager",
+    },
+    {
+      label: "Helpers",
+      url: "/styleguide/js_helpers",
+    },
+
+
+    {
+      section: "Developer resources",
+    },
+    {
+      label: "Development board",
+      url: "https://github.com/katalyst/ornament/projects/1",
+      target: "_blank",
+      keywords: "jira,tasks,todo",
+    },
+    {
+      label: "Changelog",
+      url: "https://github.com/katalyst/ornament/blob/develop/CHANGELOG.md",
+      target: "_blank",
+    },
+    {
+      label: "S/CSS coding standards",
+      url: "https://github.com/katalyst/ornament/wiki/CSS-Styleguide-and-Coding-Standards",
+      target: "_blank",
+      keywords: "styleguide,best practices",
+    }
+  ]
+%>
+<div class="styleguide-page--sidebar--filter-list" data-sidebar-filter-list style="display: none;"></div>
+<ul class="styleguide-page--sidebar--list" data-sidebar-navigation>
+  <% navigation.each do |nav_item| %>
+    <% if nav_item[:section] && !nav_item[:section].eql?(last_section) %>
+      <% last_section = nav_item[:section] %>
+      <li class="styleguide-page--sidebar--section-header">
+        <p><strong><%= nav_item[:section] %></strong></p>
+        <% if nav_item[:description] %>
+          <p class="styleguide-page--sidebar--section-description"><%= nav_item[:description] %></p>
+        <% end %>
+      </li>
+    <% else %>
+      <li 
+        class="
+          <%= " active" if request.path.eql?(nav_item[:url]) %>
+          <%= " styleguide-page--sidebar--disabled" if nav_item[:disabled] %>
+        "
+        data-styleguide-navigation-item data-section="<%= last_section %>"
+        data-keywords="<%= nav_item[:keywords] %>"
+      >
+        <%= link_to nav_item[:url], target: nav_item[:target] do %>
+          <%= nav_item[:label] %>
+          <% if nav_item[:target] && nav_item[:target].eql?("_blank") %>
+            <%= icon "external_link", width: 16, height: 16 %>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+

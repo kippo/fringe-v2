@@ -1,0 +1,20 @@
+<% content_for :title, "Tooltip" %>
+
+<% content_for :styles do %>
+  <style>
+    .tooltip { text-decoration: underline; }
+  </style>
+<% end %>
+
+<div class="content-spacing">
+
+  <h2 class="heading-two">Tippy</h2>
+
+  <p>Tooltips are provided by the <a href="https://atomiks.github.io/tippyjs/" target="_blank">Tippy library</a>.</p>
+  <p>We have a light wrapper for Ornament that allows tooltips via the <code>data-tooltip</code> attribute:</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "tip" } do -%>
+<span class="tooltip" data-tooltip title="This is my tooltip">This is my anchor</span>
+  <%- end -%>
+
+</div>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+
+    <%# Meta tags %>
+    <meta charset="utf-8"/>
+    <%= render "layouts/seo",
+      use_pwa_settings: true,
+      theme_colour: "#db892a"
+    -%>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% unless Rails.env == "production" %>
+      <meta name="robots" content="noindex,nofollow"/>
+    <% end  %>
+    <%= yield :meta %>
+
+    <script>
+      window.Ornament || (window.Ornament = {});
+      // dataLayer = window.dataLayer = {};
+    </script>
+
+    <%# Styles %>
+    <%= stylesheet_pack_tag "styleguide" %>
+    <%= yield :styles %>
+
+    <%# Scripts %>
+    <script>
+      var Ornicons = {
+        chevronLeft: "<%= escape_javascript icon("chevron_left") %>",
+        chevronRight: "<%= escape_javascript icon("chevron_right") %>",
+        close: "<%= escape_javascript icon("close") %>"
+      }
+    </script>
+
+    <%= javascript_pack_tag "application" %>
+    <%= javascript_pack_tag "styleguide" %>
+    <%= yield :scripts %>
+
+    <%# Google Tag Manager - GTM-XXXXXXX %>
+    <%- gtm_code = get_koi_site_setting("site.gtm_code") -%>
+    <%- if gtm_code -%>
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','<%= gtm_code -%>');</script>
+    <%- end -%>
+
+    <%# Webfonts %>
+    <%#= render "layouts/webfonts", config: {
+      google: {
+        families: ['Open Sans:400,700,400italic,700italic'],
+      }
+    } -%>
+
+    <%# Koi Scripts %>
+    <%- koi_scripts = get_koi_site_setting("site.head_scripts") -%>
+    <%= koi_scripts if koi_scripts -%>
+
+  </head>
+
+  <body class="styleguide <%= yield :body_class -%>"> 
+    <%- if gtm_code -%>
+      <%# Google Tag Manager (noscript Version) %>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtm_code -%>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <%- end -%>
+
+    <a class="skip-link button button__large" href="#main">skip to content</a>
+
+    <div class="layout">
+      <div class="layout--content" data-tray-scroll-positioner>
+
+        <div class="layout--positioner">
+          <div class="styleguide-page" data-tray-overlay-darken>
+            <div class="styleguide-page--sidebar" data-tray-overlay>
+              <button class="styleguide-page--sidebar--close" data-tray-close title="Close menu">
+                <div>
+                  <span>Close menu</span>
+                  <%= icon "close", width: 16, height: 16 %>
+                </div>
+              </button>
+
+              <div class="styleguide-page--sidebar--filter">
+                <%= icon("search", width: 16, height: 16) %>
+                <input type="text" placeholder="Filter" aria-label="Filter pages" data-sidebar-filter-input />
+              </div>
+              <%= render "layouts/styleguide/styleguide_navigation" %>
+
+            </div>
+            <main role="main" class="styleguide-page--main environment-<%= Rails.env -%>">
+
+              <% large_header = request.path.eql?(styleguide_path) %>
+              <header class="header <%= "header__main" if large_header %>" role="banner">
+                <button class="header--menu" title="Open menu" data-tray-button>
+                  <%= icon("hamburger", width: 25, height: 23) -%>
+                </button>
+
+                <div class="<%= large_header ? "header--container" : "styleguide-page--main--container" %> spacing">
+                  <div class="spacing-xxx-tight">
+                    <h1>
+                      <span class="<%= large_header ? "heading-one" : "heading-three" %>"><%= link_to "Ornament", styleguide_path %></span>
+                      <span class="type--grey" data-ornament-version></span>
+                    </h1>
+                    <% if large_header %>
+                      <p>The front-end pattern library and starter-kit for Katalyst web applications</p>
+                    <% end %>
+                  </div>
+                  <% if large_header %>
+                    <div>
+                      <div class="button-set button-set__center">
+                        <div>
+                          <%= link_to "Get Started", "/styleguide/getting_started", class:"button button__shadowed" %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <% if large_header %>
+                  <div class="header--github">
+                    <%= link_to "https://github.com/katalyst/ornament", class: "button button__icon-left icon--white", title: "View on Github" do %>
+                      <%= icon("github", width: 24, height: 24) %>
+                      <span>View on Github</span>
+                    <% end %>
+                  </div>
+                <% end %>
+              </header>
+
+              <%= render "/shared/oldie" -%>
+              <%= render "/shared/flash" -%>
+              <%= yield :above_layout -%>
+
+              <div class="styleguide-page--main--container styleguide-page--main-content">
+                <a id="main" name="main" tabindex="-1"></a>
+                
+                <%- if content_for?(:title) -%>
+                  <div class="page--title styleguide--title">
+                    <h2 class="heading-one"><%= yield(:title) -%></h2>
+                    <%= link_to raw("&lsaquo; Back"), styleguide_path -%>
+                  </div>
+                <%- end -%>
+
+                <%- if content_for?(:global) || !yield.blank? -%>
+                  <div class="<%= yield(:layout_class) -%>">
+                    <%= content_for?(:global) ? yield(:global) : yield %>
+                  </div>
+                <%- end -%>
+              </div>
+
+              <%= yield :below_layout -%>
+            </main>
+
+            <footer class="footer align__right" role="contentinfo">
+              By <%= link_to "Katalyst Interactive", "https://katalyst.com.au" %>
+            </footer>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <%= yield :scripts_bottom %>
+
+    <%= render "layouts/analytics" -%>
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </body>
+
+</html>

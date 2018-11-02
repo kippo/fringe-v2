@@ -1,0 +1,11 @@
+// See app-height-variable.js for more information
+@mixin app-height($context:false) {
+  @if $context == "min" {
+    $context: "min-";
+  }
+  @if $context == "max" {
+    $context: "max-";
+  }
+  #{$context}height: 100vh; // for non-var support
+  #{$context}height: var(--app-height);
+}

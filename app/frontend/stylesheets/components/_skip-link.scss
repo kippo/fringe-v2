@@ -1,0 +1,17 @@
+.skip-link {
+  position: absolute;
+  left: $xxxxx-small-unit;
+  // padding: $xxx-small-unit $default-unit;
+  // background: $primary-color;
+  // @include color-link($white, $white);
+
+  @include transition(transform .1s ease-in);
+  @include transform(translateY(-100%));
+  z-index: 995;
+
+  &:focus {
+    @include transform(translateY($xxx-small-unit));
+    text-indent: 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+  }
+}

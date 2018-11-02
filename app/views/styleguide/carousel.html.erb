@@ -1,0 +1,124 @@
+<% content_for :title, "Carousel" %>
+
+<div class="rhythm">
+
+  <section class="spacing">
+
+    <h2 class="heading-two">TinySlider</h2>
+
+    <p>Carousels are provided by the <a href="https://github.com/ganlanyuan/tiny-slider">TinySlider</a> library.</p>
+
+    <hr />
+
+    <h2 class="heading-two">Basic Slider</h2>
+
+    <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "basic" } do -%>
+<div data-carousel>
+  <div data-carousel-slides>
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+  </div>
+  <div data-carousel-nav></div>
+</div>
+    <%- end -%>
+
+    <hr />
+
+    <h2 class="heading-two">Gallery</h2>
+
+    <p>
+      Captions, videos, thumbnail navigation
+    </p>
+
+    <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "gallery" } do -%>
+<div data-carousel data-carousel-gallery>
+  <div data-carousel-slides>
+    <div>
+      <img src="http://placehold.it/1024x600" />
+      <div class="carousel--caption">
+        This is a caption
+      </div>
+    </div>
+    <div>
+      <img src="http://placehold.it/1024x600" />
+    </div>
+    <div>
+      <div class="embed__youtube">
+        <iframe src="https://www.youtube.com/embed/3FOzD4Sfgag" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="carousel--caption">
+        This video has a caption
+      </div>
+    </div>
+    <div>
+      <img src="http://placehold.it/1024x600" />
+    </div>
+    <div>
+      <img src="http://placehold.it/1024x600" />
+    </div>
+    <div>
+      <img src="http://placehold.it/1024x600" />
+    </div>
+  </div>
+  <div data-carousel-nav></div>
+</div>
+    <%- end -%>
+
+    <hr />
+
+    <h2 class="heading-two">Cards</h2>
+
+    <p>
+      Add <code>data-carousel-cards</code> to treat the slider as non-looping, fixed-width-items slider with no dot navigation.
+    </p>
+
+    <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "cards" } do -%>
+<div data-carousel data-carousel-cards>
+  <div data-carousel-slides>
+    <% 25.times do %>
+      <div>
+        <div class="card">
+          <div class="card--image">
+            <img src="http://placehold.it/300x200" />
+          </div>
+          <div class="card--content compressed">
+            <p><strong>Awesome card</strong></p>
+            <p>The awesome card is pretty awesome.</p>
+            <p><small class="type--grey">Posted Yesterday</small></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+    <%- end -%>
+
+    <hr />
+
+    <h2 class="heading-two">Custom buttons</h2>
+
+    <p>Very basic implementation of custom arrow buttons</p>
+
+    <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "custom-arrows" } do -%>
+<div data-carousel>
+  <div data-carousel-slides>
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+    <img src="http://placehold.it/1024x600" />
+  </div>
+  <div data-carousel-nav></div>
+  <div>
+    <button type="button" data-carousel-previous class="button">Previous</button>
+    <button type="button" data-carousel-next class="button">Next</button>
+  </div>
+</div>
+    <%- end -%>
+
+  </section>
+
+</div>

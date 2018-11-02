@@ -1,0 +1,32 @@
+// inline icons as a class
+.icon-inline {
+  @include icon-inline;
+}
+
+.icon--primary {
+  @include icon-color($primary-color);
+}
+
+.icon--white {
+  @include icon-color($white);
+}
+
+.icon--passive {
+  @include icon-color($passive-color);
+}
+
+.icon--success {
+  @include icon-color($success-color);
+}
+
+.icon--error {
+  @include icon-color($error-color);
+}
+
+.icon--alert {
+  @include icon-color($alert-color);
+}
+
+.icon--notice {
+  @include icon-color($notice-color);
+}

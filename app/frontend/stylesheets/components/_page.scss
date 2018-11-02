@@ -1,0 +1,49 @@
+$page-breakpoint: 960px;
+$page-breakpoint-small: 720px;
+
+.page--title {
+  margin-bottom: $xx-large-unit;
+}
+
+.page__with-sidebar,
+.page__with-sidebar-right {
+  @include row;
+}
+
+.page--main {
+  @include spang(8,12);
+
+  @include media-query($page-breakpoint-small) {
+    @include spang(1,1);
+  }
+
+  .page__with-sidebar & {
+    @include media-query($page-breakpoint, min) {
+      @include spacer-left(1,12);
+    }
+  }
+
+  .page__with-sidebar-right & {
+    @include media-query($page-breakpoint, min) {
+      @include spacer-right(1,12);
+    }
+  }
+}
+
+.page--sidebar {
+  @include spang(3,12);
+
+  @include media-query($page-breakpoint) {
+    @include spang(4,12);
+  }
+
+  @include media-query($page-breakpoint-small) {
+    @include spang(1,1);
+  }
+
+  .page__with-sidebar & {
+    @include media-query($page-breakpoint-small, min) {
+      @include order(-1);
+    }
+  }
+}

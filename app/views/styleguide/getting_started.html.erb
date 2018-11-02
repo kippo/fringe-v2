@@ -1,0 +1,62 @@
+<% content_for :title, "Getting started" %>
+
+<div class="content-spacing">
+
+  <p>Simply add the gem:</p>
+
+  <pre class="sg-pre prettyprint">gem 'ornament', github: 'katalyst/ornament', branch: 'master'</pre>
+  
+  <p>And then run the ornament generator:</p>
+
+  <pre class="sg-pre prettyprint">rails generate ornament</pre>
+
+  <p>If you want to be on the bleeding-edge development version you can use the <code>develop</code> branch instead of master, however there may be bugs.</p>
+
+  <hr />
+
+  <h2 class="heading-two">Required Gems</h2>
+
+  <p>Make sure these gems to your Gemfile:</p>
+
+  <pre class="sg-pre prettyprint">gem 'webpacker', '~> 3.5'
+gem 'htmlentities', '~> 4.3.4'
+gem 'simple-navigation', '~> 3.14.0'</pre>
+
+  <p>These gems should be automatically appended to your gemfile and printed to the terminal when you generate Ornament.</p>
+
+  <hr />
+
+  <h2 class="heading-two">Asset Precompilation</h2>
+
+  <p>There are a few assets that Ornament will need to be precompiled, these are managed in <code>config/initializers/ornament.rb</code>.</p>
+
+  <hr />
+  <h2 class="heading-two">Non-Koi projects</h2>
+
+  <p>Ornament was built for Koi, but if you are using it on a non-koi project you will need to take some additional steps:</p>
+
+  <p>Koi comes with simple_form which Ornament has a customised initialiser for. It can be found in <code>config/initializers/simple_form.rb</code>. If you aren't using simple_form you will need to delete or disable this file.</p>
+
+  <p>Koi controllers need to include CommonControllerActions, so if you aren't using Koi you will need to disable this line from the <code>styleguide_controller.rb</code>:</p>
+
+  <pre class="sg-pre">include CommonControllerActions</pre>
+
+  <hr />
+  <h2 class="heading-two">Setting up your application</h2>
+
+  <h3 class="heading-three">Layout</h3>
+  <p>There are two application layouts that Ornament uses.</p>
+  <p>The first is <code>global.html.erb</code> which is your global template, header, footer, navigation etc.</p>
+  <p>The second is <code>application.html.erb</code> which is wrapped in the global template. This is where you develop <a href="/styleguide/page_layouts">your page layout logic</a>.</p>
+
+  <h3 class="heading-three">Identity</h3>
+  <p>Jump into the <a href="/styleguide/seo_partial">SEO partial</a> and update the default values.</p>
+  <p>Update the names and icons in <a href="/styleguide/service_worker">the webmanifest file</a>.</p>
+  <p>Update the default 500.html and maintenance.html files in the public directory as required.</p>
+
+  <h3 class="heading-three">Optimising</h3>
+  <p>Ornament comes with a lot of big components made up of large JS and CSS. Depending on the size of your project you probably won't need everything included.</p>
+  <p>At the beginning of a project I typically go in to the <code>application.scss</code>, <code>application.js</code> and <code>application_bottom.js</code> files and disable components I likely won't be using such as object slider, tabs, tooltips etc.</p>
+  <p>Then when I start to implement these features in the application I'm developing I will bring them back in.</p>
+
+</div>

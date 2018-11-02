@@ -1,0 +1,148 @@
+<% content_for :title, "Simple navigation renderer" %>
+
+<div class="content-spacing">
+
+  <p>You can use the <code>ornament_menu</code> simple-navigation renderer to automatically add arrows, toggle and accessibility features.</p>
+  <p>In order to use this renderer in your app, you will need to register the renderer in your <code>navigation.rb</code> file.</p>
+
+  <div data-styleguide-code-sample>
+    <pre class="sg-pre prettyprint"># config/navigation.rb
+SimpleNavigation.register_renderer :ornament_menu => OrnamentNavRenderer</pre>
+  </div>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "nav-ornament1", no_html: true, ruby: capture { -%>
+&lt;div class="navigation">
+  &lt;div class="layout--container">
+    &lt;nav>
+      &lt;%= koi_render_navigation "header_nav", "header_navigation", renderer: :ornament_menu, level: 1..2, expand_all: true %>
+    &lt;/nav>
+  &lt;/div>
+&lt;/div>
+  <%- } } do -%>
+<div class="navigation">
+  <div class="layout--container">
+    <nav>
+      <%= render_navigation context: :styleguide_sample, renderer: :ornament_menu, level: 1..2, expand_all: true, id_namespace: "example1" %>
+    </nav>
+  </div>
+</div>
+  <%- end -%>
+
+  <hr />
+  <h2 class="heading-two">A note about IDs</h2>
+  <p>One of the benefits of this renderer is that also comes with the ability to customise the key ids to a namespace with <code>id_namespace</code>.</p>
+  <p>This is required if you have multiple menus using any of the same navitems, eg in the case of seperate desktop and mobile navigation. If you have multiple menus using either no namespace or the same namespace, you will notice duplicate id errors in the console and any toggles may start triggering multiple times. Best practice is to always define a namespace.</p>
+
+  <hr />
+  <h2 class="heading-two">Customising renderer</h2>
+  <p>Like all of Ornament, the renderer is generated in to your project so you can customise to suit your needs. The renderer is generated in to <code>/app/renderers/ornament_nav_renderer.rb</code>.</p>
+
+  <hr />
+  <h2 class="heading-two">No icons</h2>
+  <p><code>no_icons: true</code> will render the menu without the automatic svg arrow icons.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "nav-ornament2", no_html: true, ruby: capture { -%>
+&lt;div class="navigation">
+  &lt;div class="layout--container">
+    &lt;nav>
+      &lt;%= koi_render_navigation "header_nav", "header_navigation", renderer: :ornament_menu, level: 1..2, expand_all: true, no_icons: true %>
+    &lt;/nav>
+  &lt;/div>
+&lt;/div>
+  <%- } } do -%>
+<div class="navigation">
+  <div class="layout--container">
+    <nav>
+      <%= render_navigation context: :styleguide_sample, renderer: :ornament_menu, level: 1..2, expand_all: true, id_namespace: "example2", no_icons: true %>
+    </nav>
+  </div>
+</div>
+  <%- end -%>
+
+  <hr />
+  <h2 class="heading-two">Hover instead of toggle</h2>
+  <p><code>no_toggle: true</code> will disable the click-to-toggle subnavigation behaviour. Keep in mind that doing this will negatively impact the accessibility of the menu and is not recommended.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "nav-ornament3", no_html: true, ruby: capture { -%>
+&lt;div class="navigation">
+  &lt;div class="layout--container">
+    &lt;nav>
+      &lt;%= koi_render_navigation "header_nav", "header_navigation", renderer: :ornament_menu, level: 1..2, expand_all: true, no_icons: true, no_toggle: true %>
+    &lt;/nav>
+  &lt;/div>
+&lt;/div>
+  <%- } } do -%>
+<div class="navigation">
+  <div class="layout--container">
+    <nav>
+      <%= render_navigation context: :styleguide_sample, renderer: :ornament_menu, level: 1..2, expand_all: true, id_namespace: "example3", no_icons: true, no_toggle: true %>
+    </nav>
+  </div>
+</div>
+  <%- end -%>
+
+  <hr />
+  <h2 class="heading-two">Basic</h2>
+
+  <p>If you are intending to hide the arrows and disable the toggle functions, you may be interested in the <code>basic</code> option which removes all toggles and icons and generates just a nested unordered list for use with things like the Drilldown component or anything else that requires just a regular old <code>ul</code>.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "nav-ornament-basic", no_html: true, ruby: capture { -%>
+&lt;div data-drilldown>
+  &lt;%= koi_render_navigation "header_nav", "header_navigation", renderer: :ornament_menu, level: 1..2, expand_all: true, basic: true %>
+&lt;/div>
+  <%- } } do -%>
+<div data-drilldown>
+  <%= render_navigation context: :styleguide_sample, renderer: :ornament_menu, level: 1..2, expand_all: true, id_namespace: "example4", basic: true %>
+</div>
+  <%- end -%>
+
+  <hr />
+  <h2 class="heading-two">No renderer</h2>
+
+  <p>If you aren't using simple-navigation, you can leverage the navigation classes in your HTML to produce basic hover navigation variation:</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "nav-simple", ruby: capture { -%>
+&lt;div class="navigation">
+  &lt;div class="layout--container">
+    &lt;nav class="navigation__simple">
+      &lt;%= koi_render_navigation "header_nav", "header_navigation", renderer: :sf_menu, level: 1..2, expand_all: true %>
+    &lt;/nav>
+  &lt;/div>
+&lt;/div>
+  <%- } } do -%>
+<div class="navigation">
+  <div class="layout--container">
+    <nav class="navigation__simple">
+      <ul>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">About</a>
+          <ul>
+            <li>
+              <a href="#">History</a>
+            </li>
+            <li>
+              <a href="#">Board Members</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navigation--active-item">
+          <a href="#">Products</a>
+          <ul>
+            <li class="navigation--active-item">
+              <a href="#">On Sale</a>
+            </li>
+            <li>
+              <a href="#">Other</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+  <%- end -%>
+
+</div>

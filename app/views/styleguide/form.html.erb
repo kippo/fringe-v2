@@ -1,0 +1,268 @@
+
+<% content_for :title, "Form styles" %>
+
+<% content_for :scripts_bottom do %>
+  <script>
+    document.addEventListener("ornament:refresh", function(){
+      if(!Ornament.C.FormDatepicker || !(Ornament.C.FormatDatepikcer && Ornament.C.FormatDatepicker.enabled)){
+        var $modifiers = document.querySelector("[data-jquery-modifiers]");
+        if($modifiers) {
+          $modifiers.style.display = "none";
+        }
+      }
+    });
+  </script>
+<% end %>
+
+<div class="content-spacing">
+  <%= simple_form_for :test_form, url: request.path, remote: true do |f| %>
+
+  <div class="panel panel__passive panel--padding">
+    <em>Note: Ornament assumes you are using simple_form to generate form fields.</em>
+  </div>
+
+  <hr />
+
+  <h2 class="heading-two">Spacing out fields</h2>
+
+  <p>All fields are spaced using the <code>inputs</code> class.</p>
+  <p>The <code>inputs</code> class only affects direct children, so any nested inputs will need another <code>inputs</code> class.</p>
+  <p>You can space any buttons away from the inputs above by using the <code>actions</code> class.</p>
+
+  <p>Error blocks should live inside the <code>inputs</code> class as it will space it out from the fields as well.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-spacing", ruby: capture { -%>
+&lt;div class="inputs">
+  &lt;%- unless f.error_notification.blank? -%>
+    &lt;%= f.error_notification %>
+  &lt;%- end -%>
+  &lt;%= f.input :sample_field_1, input_html: { class: "form--medium" } %>
+  &lt;%= f.input :sample_field_2, input_html: { class: "form--medium" } %>
+&lt;/div>
+&lt;div class="actions">
+  &lt;%= f.button :button, "Submit" -%&gt;
+&lt;/div>
+  <%- } } do -%>
+<div class="inputs">
+  <div class="panel__error panel--padding">
+    Errors were found!
+  </div>
+  <%= f.input :sample_field_1, input_html: { class: "form--medium" } %>
+  <%= f.input :sample_field_2, input_html: { class: "form--medium" } %>
+</div>
+<div class="actions">
+  <button class="button">Submit</button>
+</div>
+  <%- end -%>
+
+  <hr />
+
+  <h2 class="heading-two">Form field lengths</h2>
+
+  <p>Field lengths can be controlled with <code>form--*</code> classes.</p>
+
+  <p>You can add these classes to the input directly to only size the input, or you can add the class to the wrapper to size the input along with any hints, labels, error messages etc. that are associated.</p>
+
+  <p>The available lengths are:</p>
+
+  <div class="inputs">
+    <%= f.input :size_large,  required: false, label: "<code>.form--large</code>".html_safe, input_html: { class: "form--large" } %>
+    <%= f.input :size_medium, required: false, label: "<code>.form--medium</code>".html_safe, input_html: { class: "form--medium" } %>
+    <%= f.input :size_small,  required: false, label: "<code>.form--small</code>".html_safe, input_html: { class: "form--small" } %>
+    <%= f.input :size_x_small,required: false, label: "<code>.form--x-small</code>".html_safe, input_html: { class: "form--x-small" } %>
+    <%= f.input :size_auto,   required: false, label: "<code>.form--auto</code>".html_safe, input_html: { class: "form--auto" }, as: :select, collection: ["Lorem", "Ipsum"], prompt: "Please select" %>
+  </div>
+
+  <p>If you want a thinner input field, you can use <code>.input__tight</code>:</p>
+
+  <%= f.input :size_tight, required: false, label: "<code>.form--x-small.input__tight</code>".html_safe, input_html: { class: "form--x-small input__tight" } %>
+
+  <hr />
+
+  <h2 class="heading-two">Field modifiers</h2>
+
+  <p>Placeholders are added with the <code>placeholder</code> input attribute.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-modifiers-placeholder", ruby: capture { -%>
+&lt;%= f.input :with_placeholder, placeholder: "Example placeholder", input_html: { class: "form--medium" } %>
+  <%- } } do -%>
+<%= f.input :with_placeholder, placeholder: "Example placeholder", input_html: { class: "form--medium" } %>
+  <%- end -%>
+
+  <p>Hints appear inside the label element just after the text for the label and use the class <code>hint-block</code>.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-modifiers-hint", ruby: capture { -%>
+&lt;%= f.input :with_hint, hint: "This is a hint message.", input_html: { class: "form--medium" } %>
+  <%- } } do -%>
+<%= f.input :with_hint, hint: "This is a hint message.", input_html: { class: "form--medium" } %>
+  <%- end -%>
+
+  <p>Errors appear inline next to labels and use the <code>error-block</code> class.</p>
+  <p>The wrapper should also get the class of <code>error</code> to colour the label.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-modifiers-error", ruby: capture { -%>
+&lt;%= f.input :example, error: "Example Error" -%&gt;
+  <%- } } do -%>
+<div class="control-group string required form--medium error">
+  <div class='control-group--label'>
+    <label class="string required control-label" for="modifier-error">
+      <abbr title="required">*</abbr> With error<span class='error-block'>can't be blank</span>
+    </label>
+  </div>
+  <div class="controls">
+    <input class="string required" id="modifier-error" type="text">
+  </div>
+</div>
+  <%- end -%>
+
+  <p>Disabled fields use the <code>disabled</code> input attribute.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "disabled", ruby: capture { -%>
+&lt;%= f.input :disabled_field, disabled: true, input_html: { class: "form--medium" } -%&gt;
+  <%- } } do -%>
+<%= f.input :disabled_field, disabled: true, input_html: { class: "form--medium" } %>
+  <%- end -%>
+
+  <p>Similarly, read-only fields use the <code>readonly</code> input attribute.</p>
+  <p>Be aware of the <a href="http://stackoverflow.com/questions/7730695/whats-the-difference-between-disabled-disabled-and-readonly-readonly-for-ht">difference between readonly and disabled</a> and use the correct one where appropriate.</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "readonly", ruby: capture { -%>
+&lt;%= f.input :readonly_field, readonly: true, input_html: { class: "form--medium" } %>
+  <%- } } do -%>
+<%= f.input :readonly_field, readonly: true, input_html: { class: "form--medium" } %>
+
+  <%- end -%>
+
+  <div data-jquery-modifiers>
+    <hr />
+    <h2 class="heading-two">Datepicker (jQuery UI)</h2>
+    <p>jQuery Datepicker can be added by giving your input field the class <code>datepicker</code>.</p>
+
+    <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-modifiers-disabled", ruby: capture { -%>
+&lt;%= f.input :datepicker, input_html: { class: "datepicker form--medium" } %>
+    <%- } } do -%>
+<%= f.input :datepicker, input_html: { class: "datepicker form--medium" } %>
+    <%- end -%>
+
+    <p>Alternatively there's also a datetimepicker using the <code>datetimepicker</code> class.</p>
+
+    <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-modifiers-disabled", ruby: capture { -%>
+&lt;%= f.input :example, input_html: { class: "datetimepicker form--medium" } %>
+    <%- } } do -%>
+<%= f.input :datetimepicker, input_html: { class: "datetimepicker form--medium" } %>
+    <%- end -%>
+
+    <p>You can customise the settings of your datepicker by passing in data attributes in the format of <code>data-datepicker-&lt;setting>=""</code>. eg. <code>data-datepicker-changemonth="false"</code>.</p>
+    
+  </div>
+
+  <hr />
+
+  <h2 class="heading-two">Radios and checkboxes</h2>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-checkboxes", ruby: capture { -%>
+&lt;%= f.input :basic_checkboxes, as: :check_boxes -%&gt;
+  <%- } } do -%>
+<%= f.input :basic_checkboxes, as: :check_boxes %>
+  <%- end -%>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-radios", ruby: capture { -%>
+&lt;%= f.input :basic_radios, as: :radio_buttons -%&gt;
+  <%- } } do -%>
+<%= f.input :basic_radios, as: :radio_buttons %>
+  <%- end -%>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-horizontal-radios", ruby: capture { -%>
+&lt;%= f.input :hotizontal_checkboxes, as: :check_boxes, wrapper_html: { class: "form--horizontal" } %>
+  <%- } } do -%>
+<%= f.input :hotizontal_checkboxes, as: :check_boxes, wrapper_html: { class: "form--horizontal" } %>
+  <%- end -%>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-single-checkbox", ruby: capture { -%>
+&lt;%= f.input :example, as: :boolean -%&gt;
+  <%- } } do -%>
+<%= f.input :single_boolean, as: :boolean %>
+  <%- end -%>
+
+  <hr />
+
+  <h2 class="heading-two">Enhanced Radios and checkboxes</h2>
+
+  <p>You'll notice that radios and checkboxes are styled differently than native controls. If you wish to disable this functionality you will need to comment out or remove the <code>form-enhanced</code> includes in your <code>application.scss</code> and <code>application.js</code> files.</p>
+
+  <hr />
+
+  <h2 class="heading-two">Sibling fields</h2>
+
+  <p>Put two fields next to eachother by making them siblings:</p>
+
+  <%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-siblings" } do -%>
+<div class="form-siblings">
+  <div class="form-siblings--sibling">
+    <%= f.input :sibling_month, as: :select, collection: @months %>
+  </div>
+  <div class="form-siblings--sibling">
+    <%= f.input :sibling_year, as: :select, collection: @years %>
+  </div>
+</div>
+  <%- end -%>
+
+  <p>These can be controlled with the form sizing classes above.</p>
+
+<%= render layout: "/layouts/styleguide/styleguide_feature", locals: { id: "form-siblings-small" } do -%>
+<div class="form-siblings form--medium">
+  <div class="form-siblings--sibling">
+    <%= f.input :sibling_month_small, as: :select, collection: @months %>
+  </div>
+  <div class="form-siblings--sibling">
+    <%= f.input :sibling_month_small, as: :select, collection: @years %>
+  </div>
+</div>
+  <%- end -%>
+  <% end %>
+
+  <hr />
+
+  <h2 class="heading-one">Long form example</h2>
+
+  <div class="content">
+    <p>Minim ex qui amet minim culpa et quis dolore consequat. Veniam sint est adipisicing elit sunt tempor aliquip enim laboris consequat minim. Laborum cupidatat quis irure aute quis esse dolor officia velit.</p>
+    <p>Non irure aliqua amet consectetur esse sit esse exercitation incididunt duis aute consectetur ullamco. Voluptate Lorem consectetur mollit ipsum occaecat aliqua cillum nisi sunt tempor sint nostrud nostrud voluptate. Incididunt proident adipisicing duis deserunt laboris ipsum dolore aliqua et fugiat nostrud. Elit velit magna ullamco veniam mollit eiusmod est cupidatat.</p>
+  </div>
+
+  <%= simple_form_for :full_example, url: "/styleguide/form", html: { class: "form-embedded" }, remote: true do |f| %>
+
+    <div class="inputs">
+      <%= f.error_notification %>
+      <h3 class="heading-five">About you</h3>
+      <%= f.input :name, hint: "First and last name", input_html: { class: "form--medium" } %>
+      <%= f.input :phone, error: "This field has errors", input_html: { class: "form--medium" } %>
+      <%= f.input :email, input_html: { class: "form--medium" } %>
+      <%= f.input :date_of_birth, input_html: { type: "date", class: "form--medium" } %>
+      <%= f.input :country, as: :select, collection: @countries, prompt: "Please select", input_html: { class: "form--medium" } %>
+      <%= f.input :state, as: :select, collection: ["SA", "NSW", "QLD", "TAS", "VIC", "WA", "NT", "ACT"], prompt: "Please select", wrapper_html: { data: { show: "full_example_country", show_option: "AU" } }, input_html: { class: "form--auto" } %>
+      <h3 class="heading-five">About your submission</h3>
+      <%= f.input :genre, as: :radio_buttons, collection: ["Comedy", "Drama", "Dramedy" ], hint: "Please choose only one." %>
+      <%= f.input :tags, as: :check_boxes, collection: ["Funny", "Serious"], hint: "Please choose as many as you like." %>
+      <h3 class="heading-five">Details</h3>
+      <%= f.input :introduction, as: :text, hint: "Limited to 10 words only.", input_html: { class: "form--medium", data: { limiter: 10, limiter_word: "", limiter_micro: "" } } %>
+      <%= f.input :message, as: :text, input_html: { class: "form--large" } %>
+      <h3 class="heading-five">Expiry</h3>
+      <div>
+        <div class="form-siblings form--medium">
+          <div class="form-siblings--sibling">
+            <%= f.input :month %>
+          </div>
+          <div class="form-siblings--sibling">
+            <%= f.input :year %>
+          </div>
+        </div>
+      </div>
+      <%= f.input :terms, as: :boolean, label: "I have read an accept the <a href='#' target='_blank'>terms and conditions</a>.".html_safe %>
+    </div>
+    <div class="actions">
+      <%= f.button :button, "Submit", class: "button" %>
+    </div>
+  <% end %>
+
+</div>

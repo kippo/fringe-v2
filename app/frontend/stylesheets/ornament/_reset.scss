@@ -1,0 +1,121 @@
+// =========================================================================
+// Set box sizing
+// =========================================================================
+
+* {
+  box-sizing: border-box;
+}
+
+// =========================================================================
+// Reset buttons to resemble links instead 
+// =========================================================================
+
+button {
+  -webkit-appearance: inherit;
+  -webkit-box-align: inherit;
+  -webkit-font-smoothing: antialiased;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font: inherit;
+  height: auto;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  text-transform: inherit;
+  border-radius: 0;
+  // fix for psuedo elements being misaligned in IE
+  overflow: visible; 
+  @include disable-mouse-outline;
+}
+
+// =========================================================================
+// Force document heights
+// BODY & HTML elements should always be 100% of the 
+// viewports height and width.
+// =========================================================================
+
+:root {
+  --app-height: 100vh;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  font-size: 100%;
+}
+
+// =========================================================================
+// HTML5 <main> element should be block level by default 
+// =========================================================================
+
+main {
+  display: block;
+}
+
+// =========================================================================
+// Improved text rendering 
+// Text antialiasing and image interpolation.
+// =========================================================================
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  -ms-interpolation-mode: bicubic;
+}
+
+// =========================================================================
+// Tables
+// =========================================================================
+
+th {
+  text-align: left;
+}
+
+// =========================================================================
+// Responsive media types 
+// Make image, object & iframes scale down when they get squished.
+// =========================================================================
+
+img, embed, object, video, iframe {
+  max-width: 100%;
+}
+
+// =========================================================================
+// SVG fix for various IEs
+// https://gist.github.com/larrybotha/7881691
+// =========================================================================
+
+img[src*=".svg"] {
+  width: 100%; 
+}
+
+// =========================================================================
+// Telephone link reset
+// =========================================================================
+
+a[href^=tel] {
+  text-decoration:inherit;
+  color: inherit;
+
+  &:hover {
+    text-decoration:inherit;
+  }
+}

@@ -1,0 +1,57 @@
+<%- 
+  id ||= "example"
+  ruby ||= false
+  scss ||= false
+  js ||= false
+  no_preview ||= false
+  no_html ||= false
+-%>
+
+<div class="tabs sg-feature" data-styleguide-feature>
+  <nav class="tabs--links">
+    <ul>
+      <%- unless no_preview -%>
+        <li><button class="tabs--link" data-tab="<%= id -%>__preview" data-tab-group="<%= id %>">Preview</button></li>
+      <%- end -%>
+      <%- unless no_html -%>
+        <li><button class="tabs--link" data-tab="<%= id -%>__source" data-tab-group="<%= id %>">HTML</button></li>
+      <%- end -%>
+      <%- if ruby -%>
+        <li><button class="tabs--link" data-tab="<%= id -%>__ruby" data-tab-group="<%= id %>">Ruby</button></li>
+      <%- end -%>
+      <%- if scss -%>
+        <li><button class="tabs--link" data-tab="<%= id -%>__scss" data-tab-group="<%= id %>">SCSS</button></li>
+      <%- end -%>
+      <%- if js -%>
+        <li><button class="tabs--link" data-tab="<%= id -%>__js" data-tab-group="<%= id %>">JS</button></li>
+      <%- end -%>
+    </ul>
+  </nav>
+  <div class="tabs--panes">
+    <%- unless no_preview -%>
+      <div class="tabs--pane" data-tab-for="<%= id -%>__preview">
+        <%= yield -%>
+      </div>
+    <%- end -%>
+    <%- unless no_html -%>
+      <div class="tabs--pane tabs--pane__flush" data-tab-for="<%= id -%>__source" data-styleguide-code-sample>
+        <pre class="sg-pre prettyprint"><%= render_source(yield) -%></pre>
+      </div>
+    <%- end -%>
+    <%- if ruby -%>
+      <div class="tabs--pane tabs--pane__flush" data-tab-for="<%= id -%>__ruby" data-styleguide-code-sample>
+        <pre class="sg-pre prettyprint"><%= raw(ruby) -%></pre>
+      </div>
+    <%- end -%>
+    <%- if scss -%>
+      <div class="tabs--pane tabs--pane__flush" data-tab-for="<%= id -%>__scss" data-styleguide-code-sample>
+        <pre class="sg-pre prettyprint"><%= raw(scss) -%></pre>
+      </div>
+    <%- end -%>
+    <%- if js -%>
+      <div class="tabs--pane tabs--pane__flush" data-tab-for="<%= id -%>__js" data-styleguide-code-sample>
+        <pre class="sg-pre prettyprint"><%= render_source(js) -%></pre>
+      </div>
+    <%- end -%>
+  </div>
+</div>

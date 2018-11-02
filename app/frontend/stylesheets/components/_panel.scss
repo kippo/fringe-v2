@@ -1,0 +1,88 @@
+// =========================================================================
+// Base panel
+// =========================================================================
+
+.panel {
+  @include border-radius($border-radius);
+  @include pie-clearfix;
+}
+
+.panel__bordered,
+.panel__border {
+  border: $panel-border;
+}
+
+.panel--border-top {
+  border-top: $panel-border;
+}
+
+.panel--border-bottom {
+  border-bottom: $panel-border;
+}
+
+// COLOUR VARIANTS
+
+.panel__primary {
+  @extend .panel;
+  @include panel-color($primary-color, $white);
+}
+
+.panel__passive {
+  @extend .panel;
+  @include panel-color($passive-color);
+}
+
+.panel__error {
+  @extend .panel;
+  @include panel-color($error-background, $error-color);
+}
+
+.panel__alert {
+  @extend .panel;
+  @include panel-color($alert-background, $alert-color);
+}
+
+.panel__notice {
+  @extend .panel;
+  @include panel-color($notice-background, $notice-color);
+}
+
+.panel__success {
+  @extend .panel;
+  @include panel-color($success-background, $success-color);
+}
+
+// =========================================================================
+// Padding variations
+// =========================================================================
+
+.panel--padding {
+  padding: $panel-padding;
+}
+
+// =========================================================================
+// Border radius variations 
+// =========================================================================
+
+.panel__no-top-radius {
+  @include border-top-left-radius(0);
+  @include border-top-right-radius(0);
+}
+
+.panel__no-bottom-radius {
+  @include border-bottom-left-radius(0);
+  @include border-bottom-right-radius(0);
+}
+
+// =========================================================================
+// Panel spacing
+// =========================================================================
+
+.panel-spacing {
+  .panel ~ .panel,
+  .panel ~ .panel-spacer,
+  .panel-spacer ~ .panel-spacer,
+  .panel-spacer ~ .panel {
+    margin-top: $panel-spacing;
+  }
+}
