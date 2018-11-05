@@ -27,7 +27,7 @@ $x-small-font-size:   .75rem;
 $small-font-size:     .875rem;
 $base-font-size:      1rem;
 $large-font-size:     1.125rem;
-$base-line-height:    1.5;
+$base-line-height:    1.4;
 $base-line-size:      $base-font-size * $base-line-height;
 
 // =========================================================================
@@ -39,7 +39,7 @@ $fixed-footer: true;
 $layout-mobile-tray-width:  250px;
 $layout-animation-duration: 0.5s;
 
-$container-width: 1072px;
+$container-width: 1240px;
 $container-percentage: 92%;
 $container-padding: $default-unit;
 $container-padding-mobile: $xxx-small-unit;
@@ -85,7 +85,7 @@ $site-breakpoints:
 // Gutters
 // =========================================================================
 
-$desktop-gutters: $x-small-unit;
+$desktop-gutters: $default-unit;
 
 // $large-gutter:    $large-unit;
 // $medium-gutter:   $large-unit;
@@ -134,7 +134,8 @@ $notice-background: #cbdcf6;
 $success-color: #155724;
 $success-button: #33ce57;
 $success-background: #d4edda;
-
+$hot-show-colour: #ED7025;
+$member-colour: #F21885;
 
 // Social network colours
 $facebook: #3b5998;

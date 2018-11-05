@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  #Prototyping route
+  get 'static_pages/:view', to: 'static_pages#show'
+
   get '/styleguide' => 'styleguide#index'
   get '/styleguide/:action' => 'styleguide'
   # PWA Routes

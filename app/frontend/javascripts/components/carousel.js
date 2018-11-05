@@ -1,6 +1,6 @@
-import "../vendor/libs/tiny-slider";
+import {tns} from "tiny-slider";
 
-(function (document, window) {
+(function (document, window, tns) {
   "use strict";
 
   var Carousel = {
@@ -165,7 +165,7 @@ import "../vendor/libs/tiny-slider";
       }
 
       // Initialise the slider
-      var api = tns(options);
+      
 
       // Bind custom arrows
       if($customNextButton) {
@@ -199,4 +199,4 @@ import "../vendor/libs/tiny-slider";
 
   Ornament.registerComponent("Carousel", Carousel);
 
-}(document, window));
+}(document, window, tns));

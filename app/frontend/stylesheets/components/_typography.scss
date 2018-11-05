@@ -159,7 +159,6 @@ $headings-small: (
 @mixin small-type {
   @include font($body-font);
   font-size: $small-font-size;
-  line-height: 1;
 }
 
 // =========================================================================
@@ -169,6 +168,10 @@ $headings-small: (
 html, 
 .body-type {
   @include body-type;
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
@@ -218,6 +221,14 @@ small,
 
 .type--inverse {
   @include type-color($white);
+}
+
+.type--hot-show {
+  @include type-color($hot-show-colour);
+}
+
+.type--member {
+  @include type-color($member-colour);
 }
 
 // =========================================================================
@@ -271,7 +282,7 @@ sub {
 // LINKS
 
 a, button {
-  @include decorate-link(none, underline);
+  @include decorate-link(underline, none);
   @include color-link($link-color, $link-hover-color);
 }
 
@@ -283,6 +294,18 @@ th {
   } @else {
     @include font($bold-font);
   }
+}
+
+// ALIGNMENT
+
+.text__left {
+  text-align: left;
+}
+.text__right {
+  text-align: right;
+}
+.text__center {
+  text-align: center;
 }
 
 // FORMS

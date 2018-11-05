@@ -1,0 +1,35 @@
+.event-tile__desktop {
+  display: flex; 
+
+  .event-tile--image-area {
+    position: relative;
+    flex: 1 .25 25%;
+  }
+
+  .event-tile--favourite {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .event-tile--favourite {
+    background: red;
+    padding: 1rem;
+  }
+
+  .event-tile--image-area {
+
+  }
+
+  .event-tile--content {
+    padding: 0 $desktop-gutters;
+    margin-right: $desktop-gutters;
+    border-right: $divider;
+    flex: 1 1 75%;
+  }
+
+  .event-tile--aside {
+    flex: 1 0 180px;
+  }
+
+}
