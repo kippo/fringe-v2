@@ -1,3 +1,5 @@
+// Desktop tile
+
 .event-tile__desktop {
   display: flex; 
 
@@ -32,4 +34,17 @@
     flex: 1 0 180px;
   }
 
+}
+
+// Mobile tile
+
+.event-tile__mobile {
+  .event-tile--header {
+    display: flex;
+  }
+
+  .event-tile--actions {
+    margin-top: $x-small-unit;
+    display: flex;
+  }
 }

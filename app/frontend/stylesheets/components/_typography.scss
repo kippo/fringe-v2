@@ -172,6 +172,9 @@ html,
 
 html {
   font-size: 16px;
+  @include media-query($breakpoint-typography) {
+    font-size: 14px;
+  }
 }
 
 body {

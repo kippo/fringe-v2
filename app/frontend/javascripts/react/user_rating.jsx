@@ -1,13 +1,15 @@
-class UserRating extends React.Component {
+import React from "react";
 
+export default class UserRating extends React.Component {
   constructor(props){
     super(props);
   }
-
   render() {
     return(
-      <div>12 audience reviews</div>
+      <div>
+        <span>Stars</span>
+        <span>12 audience reviews</span>
+      </div>
     )
   }
-
 };
