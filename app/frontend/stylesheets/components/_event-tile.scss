@@ -1,26 +1,24 @@
 // Desktop tile
 
-.event-tile__desktop {
-  display: flex; 
-
+.event-tile__desktop, .event-tile__mobile {
   .event-tile--image-area {
     position: relative;
-    flex: 1 .25 25%;
   }
 
   .event-tile--favourite {
     position: absolute;
     top: 0;
     left: 0;
-  }
-
-  .event-tile--favourite {
     background: red;
     padding: 1rem;
   }
+}
+
+.event-tile__desktop {
+  display: flex; 
 
   .event-tile--image-area {
-
+    flex: 1 .25 25%;
   }
 
   .event-tile--content {
@@ -33,7 +31,6 @@
   .event-tile--aside {
     flex: 1 0 180px;
   }
-
 }
 
 // Mobile tile
@@ -46,5 +43,19 @@
   .event-tile--actions {
     margin-top: $x-small-unit;
     display: flex;
+  }
+}
+
+// Compact tile
+
+.event-tile__compact {
+  .event-tile--image {
+    position: relative;
+    padding-top: 100%;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 }

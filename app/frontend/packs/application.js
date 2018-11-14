@@ -1,5 +1,5 @@
 import ReactOnRails from 'react-on-rails';
-import EventTileFull from '../javascripts/react/event_tile_full.jsx';
+import EventBrowse from '../javascripts/react/event_browse.jsx';
 
 // Generate application.css
 import '../stylesheets/application.scss';
@@ -8,5 +8,5 @@ import '../stylesheets/application.scss';
 import '../javascripts/application.js';
 
 ReactOnRails.register({
-  EventTileFull
+  EventBrowse
 });

@@ -1,2 +1,41 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<div class="spacing">
+  <div class="spacing-xx-tight">
+    <div class="heading-with-button">
+      <h2 class="heading-three">Events on today</h2>
+      <%= link_to "View event calendar", "#" -%>
+    </div>
+    <div>
+      <ul class="tile-scroller">
+        <%- 8.times do -%>
+          <li>
+            <%= react_component("EventTileCompact") %>
+          </li>
+        <% end %>
+        <li class="tile-scroller--view-more">
+          <div>View More</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="spacing-xx-tight">
+    <div class="heading-with-button">
+      <h2 class="heading-three">Selected for you</h2>
+      <%= link_to "View all events", "/static_pages/events_list" -%>
+    </div>
+    <div>
+      <ul class="tile-scroller">
+        <%- 8.times do -%>
+          <li>
+            <%= react_component("EventTileCompact") %>
+          </li>
+        <% end %>
+        <li class="tile-scroller--view-more">
+          <div>
+            <%= link_to "View More", "#" -%>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

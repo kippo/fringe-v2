@@ -1,5 +1,6 @@
 import React from "react";
 import UserRating from "./user_rating.jsx";
+import Favourite from "./favourite.jsx";
 
 export default class EventTileFullMobile extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export default class EventTileFullMobile extends React.Component {
 
         <div className="event-tile--header">
           <div className="event-tile--image-area">
-            <button className="event-tile--favourite">F</button>
+            <Favourite />
             <div>
               <img src="https://source.unsplash.com/random/300x300" />
             </div>
@@ -27,7 +28,7 @@ export default class EventTileFullMobile extends React.Component {
         </div>
 
         <div>
-          <div class="spacing-xxx-tight">
+          <div className="spacing-xxx-tight">
             <div>
               <p>Dave is single, stood with his mates at the bar, and is turning 30 next week. Eurydice is a mythical dryad - a tree nymph. This is a tale of impossible, death defying love; a tale of this world and the underworld; a tale of soul music and late night karaoke.</p>
             </div>

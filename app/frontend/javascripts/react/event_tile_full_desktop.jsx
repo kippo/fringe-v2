@@ -1,12 +1,13 @@
 import React from "react";
 import UserRating from "./user_rating.jsx";
+import Favourite from "./favourite.jsx";
 
 export default class EventTileFullDesktop extends React.Component {
   render() {
     return(
       <div className="event-tile__desktop">
         <div className="event-tile--image-area">
-          <button className="event-tile--favourite">F</button>
+          <Favourite />
           <div>
             <div>
               <img src="https://source.unsplash.com/random/300x300" />
@@ -15,7 +16,7 @@ export default class EventTileFullDesktop extends React.Component {
         </div>
         <div className="event-tile--content spacing-xxx-tight">
           <h2>
-            <a href="#" className="heading-five">The amount of redundancy pay the</a>
+            <a href="#" className="heading-five">{this.props.eventData.title}</a>
           </h2>
           <div className="spacing-xxxxxx-tight">
             <div className="genre__comedy"><strong>Comedy</strong></div>
