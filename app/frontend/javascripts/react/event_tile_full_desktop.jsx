@@ -10,7 +10,7 @@ export default class EventTileFullDesktop extends React.Component {
           <Favourite />
           <div>
             <div>
-              <img src="https://source.unsplash.com/random/300x300" />
+              <img src={"https://source.unsplash.com/random/300x300?sig=" + this.props.eventData.key} />
             </div>
           </div>
         </div>
@@ -19,12 +19,12 @@ export default class EventTileFullDesktop extends React.Component {
             <a href="#" className="heading-five">{this.props.eventData.title}</a>
           </h2>
           <div className="spacing-xxxxxx-tight">
-            <div className="genre__comedy"><strong>Comedy</strong></div>
-            <div>Garden of Unearthly Delights</div>
+            <div className="genre__comedy"><strong>{this.props.eventData.genre}</strong></div>
+            <div>{this.props.eventData.venue}</div>
             <div>21 July to 26th July</div>
           </div>
           <div>
-            <p>Dave is single, stood with his mates at the bar, and is turning 30 next week. Eurydice is a mythical dryad - a tree nymph. This is a tale of impossible, death defying love; a tale of this world and the underworld; a tale of soul music and late night karaoke.</p>
+            {this.props.eventData.description}
           </div>
           <UserRating />
         </div>

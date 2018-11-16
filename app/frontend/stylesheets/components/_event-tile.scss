@@ -1,6 +1,10 @@
 // Desktop tile
 
 .event-tile__desktop, .event-tile__mobile {
+  img {
+    display: block;
+  }
+
   .event-tile--image-area {
     position: relative;
   }

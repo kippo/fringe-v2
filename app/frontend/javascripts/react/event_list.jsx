@@ -8,9 +8,13 @@ export default class EventList extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="spacing-xxxx-loose">
         {this.props.eventData.map(function(data) {
-            return <EventTileFull eventData={data} />
+            return (
+              <div key={data.key.toString()}>
+                <EventTileFull eventData={data} />
+              </div>
+            )
           }
         )}
       </div>

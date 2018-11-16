@@ -7,17 +7,7 @@ export default class EventBrowse extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      eventData: [{
-        title: 'Fuego Carnal',
-        genre: 'Comedy',
-        venue: 'Garden of Unearthly Delights',
-        date: '21 July to 26th July'
-      },{
-        title: 'Wet Sounds',
-        genre: 'Drama',
-        venue: 'Gluttony',
-        date: '25 July to 28th July'
-      }]
+      eventData: []
     }
   }
 
@@ -25,27 +15,29 @@ export default class EventBrowse extends React.Component {
     Axios
       .get('https://my.api.mockaroo.com/fringe.json?key=482c6d90')
       .then((response) => {
-        const eventData = response.data;
-        return eventData;
+        this.setState(
+          {eventData: response.data}
+        );
       })
   }
 
-  /*
-  componentWillMount() {
-    this.setState(
-      {eventData: this.getEvents()}
-    );
+  filterCallback = (filters) => {
+    console.log(filters);
+    this.getEvents();
   }
-  */
+
+  componentDidMount() {
+    this.getEvents();
+  }
 
   render() {
     return(
       <div>
-        <EventFilters />
+        <EventFilters filterCallback={this.filterCallback} />
         <EventList eventData={this.state.eventData} />
       </div>
     )
   }
 };
 
-// Pass data into react component
+// Set filter state, update query string and send ajax request query via ajax

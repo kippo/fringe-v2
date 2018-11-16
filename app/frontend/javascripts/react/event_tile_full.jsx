@@ -22,7 +22,7 @@ export default class EventTileFull extends React.Component {
     window.requestAnimationFrame(this.detectDeviceWidth);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     console.log(this.props.eventData);
     this.detectDeviceWidth();
     window.addEventListener('resize', this.throttleResize);
