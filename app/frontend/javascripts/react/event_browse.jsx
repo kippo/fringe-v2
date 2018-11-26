@@ -7,22 +7,33 @@ export default class EventBrowse extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      eventData: []
+      eventData: [],
+      currentGenre: null,
+      dataLoaded: false
     }
   }
 
   getEvents = () => {
+    this.setState({dataLoaded: false});
     Axios
-      .get('https://my.api.mockaroo.com/fringe.json?key=482c6d90')
+      .get('https://my.api.mockaroo.com/fringe.json', {
+        params: {
+          key: "482c6d90",
+          currentGenre: this.state.currentGenre
+        }
+      })
       .then((response) => {
         this.setState(
-          {eventData: response.data}
+          {
+            eventData: response.data,
+            dataLoaded: true
+          }
         );
       })
   }
 
   filterCallback = (filters) => {
-    console.log(filters);
+    this.setState({currentGenre: filters});
     this.getEvents();
   }
 
@@ -31,13 +42,13 @@ export default class EventBrowse extends React.Component {
   }
 
   render() {
-    return(
-      <div>
-        <EventFilters filterCallback={this.filterCallback} />
-        <EventList eventData={this.state.eventData} />
-      </div>
-    )
+    let thingsToRender = [];
+    thingsToRender.push(<EventFilters filterCallback={this.filterCallback} />);
+    if (this.state.dataLoaded) {
+      thingsToRender.push(<EventList eventData={this.state.eventData} />)
+    }
+    return thingsToRender;
   }
 };
 
-// Set filter state, update query string and send ajax request query via ajax
+// Loading state, update query string and send ajax request query via ajax

@@ -4,14 +4,10 @@ export default class EventFilters extends React.Component {
   constructor(props){
     super(props);
     this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"];
-    this.state = {
-      currentGenre: null
-    }
   }
 
   filterChange = (e) => {
-    this.setState({currentGenre: e.target.value});
-    this.props.filterCallback("hello!");
+    this.props.filterCallback(e.target.value);
   }
 
   render() {
