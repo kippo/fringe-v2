@@ -3,7 +3,7 @@ import React from "react";
 export default class EventFilters extends React.Component {
   constructor(props){
     super(props);
-    this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"];
+    this.genres = ["all", "comedy", "drama", "circus", "cabaret"];
   }
 
   filterChange = (e) => {
@@ -12,7 +12,7 @@ export default class EventFilters extends React.Component {
 
   render() {
     return(
-      <select data-filter-type="genre" onChange={this.filterChange}>
+      <select value={this.props.currentGenre} onChange={this.filterChange}>
         {this.genres.map(function(genre) {
             return <option key={genre}>{genre}</option>
           }

@@ -8,13 +8,16 @@ export default class EventBrowse extends React.Component {
     super(props);
     this.state = {
       eventData: [],
-      currentGenre: null,
+      currentGenre: this.props.currentGenre.genre,
       dataLoaded: false
     }
   }
 
+  //Get data from mockaroo, add it to state and update url to match current filters
   getEvents = () => {
-    this.setState({dataLoaded: false});
+    this.setState({
+      dataLoaded: false
+    });
     Axios
       .get('https://my.api.mockaroo.com/fringe.json', {
         params: {
@@ -23,32 +26,59 @@ export default class EventBrowse extends React.Component {
         }
       })
       .then((response) => {
-        this.setState(
-          {
+        this.setState({
             eventData: response.data,
             dataLoaded: true
-          }
-        );
+        });
+        this.setURL();
       })
   }
 
+  //Set url to match current filters add them to histories state
+  setURL = () => {
+    if (this.state.currentGenre !== undefined) {
+      let state = {
+        currentGenre: this.state.currentGenre
+      };
+      history.pushState(state, '', '?genre=' + this.state.currentGenre);
+    }
+  }
+
+  //Callback function for filter component
   filterCallback = (filters) => {
     this.setState({currentGenre: filters});
     this.getEvents();
   }
 
+  //Get initial events and set filter state if user moves through history
   componentDidMount() {
     this.getEvents();
+    onpopstate = (e) => {
+      this.setState({
+        currentGenre: e.state.currentGenre
+      });
+    };
   }
 
   render() {
-    let thingsToRender = [];
-    thingsToRender.push(<EventFilters filterCallback={this.filterCallback} />);
+    const filterComponent = <EventFilters filterCallback={this.filterCallback} currentGenre={this.state.currentGenre} />;
     if (this.state.dataLoaded) {
-      thingsToRender.push(<EventList eventData={this.state.eventData} />)
+      return(
+        <div>
+          {filterComponent}
+          <EventList eventData={this.state.eventData} />
+        </div>
+      )
+    } else {
+        return(
+          <div>
+            {filterComponent}
+            Loading
+          </div>
+        )
     }
-    return thingsToRender;
   }
 };
 
-// Loading state, update query string and send ajax request query via ajax
+// Process ajax request with mockaroo and double check how ajax request is working with back button 
+// Pagination
