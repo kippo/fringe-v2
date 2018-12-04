@@ -23,7 +23,6 @@ export default class EventTileFull extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.eventData);
     this.detectDeviceWidth();
     window.addEventListener('resize', this.throttleResize);
   }

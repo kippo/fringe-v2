@@ -9,17 +9,14 @@ export default class EventBrowse extends React.Component {
     super(props);
     this.state = {
       eventData: [],
-      currentGenre: this.props.currentGenre.genre,
+      selectedFilters: QueryString.parse(location.search, {arrayFormat: 'bracket'}),
       dataLoaded: false
     }
-    this.queryStringTest = {
-      genre: ["Comedy", "Cabaret"],
-      venue: "Garden"
-    }
+    this.requestString = location.search;
   }
 
   //Get data from mockaroo, add it to state and update url to match current filters
-  getEvents = () => {
+  getEvents = (setURL) => {
     this.setState({
       dataLoaded: false
     });
@@ -27,7 +24,7 @@ export default class EventBrowse extends React.Component {
       .get('https://my.api.mockaroo.com/fringe.json', {
         params: {
           key: "482c6d90",
-          genres: this.state.currentGenre
+          genres: this.state.selectedFilters
         }
       })
       .catch(function (error) {
@@ -38,43 +35,44 @@ export default class EventBrowse extends React.Component {
           eventData: response.data,
           dataLoaded: true
         });
-        this.setURL();
+        if (setURL) {
+          this.setURL();
+        }
       })
   }
 
   //Set url to match current filters add them to histories state
   setURL = () => {
-    if (this.state.currentGenre !== undefined) {
-      let state = {
-        currentGenre: this.state.currentGenre
-      };
-      history.pushState(state, '', '?genre=' + this.state.currentGenre);
-    }
+    let state = {
+      selectedFilters: this.state.selectedFilters
+    };
+    history.pushState(state, '', '?' + this.requestString);
   }
 
   //Callback function for filter component
   filterCallback = (filters) => {
     this.setState(
-      {currentGenre: filters},
-      () => this.getEvents()
+      {selectedFilters: filters},
+      () => {
+        this.getEvents(true);
+        this.requestString = QueryString.stringify(this.state.selectedFilters, {arrayFormat: 'bracket'}); // Improve this
+      }
     );
   }
 
   //Get initial events and set filter state if user moves through history
   componentDidMount() {
-    this.getEvents();
+    this.getEvents(false);
     onpopstate = (e) => {
       this.setState(
-        {currentGenre: e.state.currentGenre},
-        () => this.getEvents()
+        {currentGenre: e.state.selectedFilters},
+        () => this.getEvents(true)
       );
     };
-    let stringified = QueryString.stringify(this.queryStringTest, {arrayFormat: 'bracket'});
-    console.log(stringified);
   }
 
   render() {
-    const filterComponent = <EventFilters filterCallback={this.filterCallback} currentGenre={this.state.currentGenre} />;
+    const filterComponent = <EventFilters filterCallback={this.filterCallback} selectedFilters={this.state.selectedFilters} />;
     if (this.state.dataLoaded) {
       return(
         <div>
@@ -93,7 +91,6 @@ export default class EventBrowse extends React.Component {
   }
 };
 
+// Come up with a better solution for setting query string
 // Forward button is broken
-// All genres shouldn't have all query string but should retain history state (bear in mind pushstate doesn't work unless a url is passed)
-// Process ajax request with mockaroo and double check how ajax request is working with back button 
-// Pagination
+// If selected filters state is an empty object pushstate doesn't work
