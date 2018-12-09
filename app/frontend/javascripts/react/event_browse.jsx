@@ -4,49 +4,64 @@ import QueryString from "query-string";
 import EventList from "./event_list.jsx";
 import EventFilters from "./event_filters.jsx";
 
-export default class EventBrowse extends React.Component {
-  constructor(props){
+export default class EventBrowse extends React.Component {  
+  constructor(props) {
     super(props);
     this.state = {
       eventData: [],
       selectedFilters: QueryString.parse(location.search, {arrayFormat: 'bracket'}),
       dataLoaded: false
     }
-    this.requestString = location.search;
+    this._isMounted = false;
   }
-
+  
   //Get data from mockaroo, add it to state and update url to match current filters
-  getEvents = (setURL) => {
+  getEvents = () => {
     this.setState({
       dataLoaded: false
     });
     Axios
-      .get('https://my.api.mockaroo.com/fringe.json', {
-        params: {
-          key: "482c6d90",
-          genres: this.state.selectedFilters
-        }
+      .get('https://my.api.mockaroo.com/fringe.json?key=482c6d90', {
+        params: this.state.selectedFilters
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error.response);
       })
       .then((response) => {
-        this.setState({
-          eventData: response.data,
-          dataLoaded: true
-        });
-        if (setURL) {
-          this.setURL();
+        if (this._isMounted) {
+          this.setState({
+            eventData: response.data,
+            dataLoaded: true
+          });
         }
       })
   }
 
-  //Set url to match current filters add them to histories state
-  setURL = () => {
+  // Set url to match current filters add them to histories state
+  setHistory = (type) => {
     let state = {
       selectedFilters: this.state.selectedFilters
     };
-    history.pushState(state, '', '?' + this.requestString);
+    // Only update url if filter state has something in it
+    if (Object.keys(this.state.selectedFilters).length != 0) {
+      let requestString = this.createQueryString();
+      if (type === 'push') {
+        history.pushState(state, '', '?' + requestString);
+      } else {
+        history.replaceState(state, '', '?' + requestString);
+      }
+    } else {
+      if (type === 'push') {
+        history.pushState(state, '', window.location.pathname);
+      } else {
+        history.replaceState(state, '', window.location.pathname);
+      }
+    }
+  }
+
+  // Create a query string based of selected filters state
+  createQueryString = () => {
+    return QueryString.stringify(this.state.selectedFilters, {arrayFormat: 'bracket'});
   }
 
   //Callback function for filter component
@@ -54,21 +69,27 @@ export default class EventBrowse extends React.Component {
     this.setState(
       {selectedFilters: filters},
       () => {
-        this.getEvents(true);
-        this.requestString = QueryString.stringify(this.state.selectedFilters, {arrayFormat: 'bracket'}); // Improve this
+        this.setHistory('push');
+        this.getEvents();
       }
     );
   }
 
   //Get initial events and set filter state if user moves through history
   componentDidMount() {
-    this.getEvents(false);
+    this._isMounted = true;
+    this.setHistory('replace');
+    this.getEvents();
     onpopstate = (e) => {
       this.setState(
-        {currentGenre: e.state.selectedFilters},
-        () => this.getEvents(true)
+        {selectedFilters: e.state.selectedFilters},
+        () => {this.getEvents();}
       );
     };
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -90,7 +111,3 @@ export default class EventBrowse extends React.Component {
     }
   }
 };
-
-// Come up with a better solution for setting query string
-// Forward button is broken
-// If selected filters state is an empty object pushstate doesn't work

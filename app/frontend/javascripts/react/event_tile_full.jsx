@@ -28,7 +28,7 @@ export default class EventTileFull extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.detectDeviceWidth);
+    window.removeEventListener('resize', this.throttleResize);
   }
 
   render() {
