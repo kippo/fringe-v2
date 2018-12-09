@@ -3,8 +3,8 @@ import React from "react";
 export default class EventFilters extends React.Component {
   constructor(props){
     super(props, );
-    this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"],
-    this.venues = ["All", "Garden of Unearthly Delights", "Gluttony", "Black Cat"]
+    this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"];
+    this.venues = ["All", "Garden of Unearthly Delights", "Gluttony", "Black Cat"];
     this.selectedFilters = this.props.selectedFilters;
   }
 
@@ -15,7 +15,6 @@ export default class EventFilters extends React.Component {
     } else if (target.tagName === "SELECT") {
       this.filterString(target.name, target.value);
     }
-
     this.props.filterCallback(this.selectedFilters);
   }
 
@@ -25,8 +24,8 @@ export default class EventFilters extends React.Component {
       let filterArray = [];
       
       // If array already exists use it instead
-      if (Array.isArray(this.selectedFilters[filterKey])) {
-        filterArray = this.selectedFilters[filterKey];
+      if (Array.isArray(this.props.selectedFilters[filterKey])) {
+        filterArray = this.props.selectedFilters[filterKey];
       }
 
       // Check to see if filter value is already in array, if not add it
@@ -53,7 +52,7 @@ export default class EventFilters extends React.Component {
   
   //Add or remove filter options stored as strings
   filterString = (filterKey, filterValue) => {
-    if (this.selectedFilters[filterKey] !== filterValue && filterValue != "All") {
+    if (this.props.selectedFilters[filterKey] !== filterValue && filterValue != "All") {
       this.selectedFilters[filterKey] = filterValue;
     } else {
       delete this.selectedFilters[filterKey];

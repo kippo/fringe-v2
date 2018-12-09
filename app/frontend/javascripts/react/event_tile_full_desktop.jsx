@@ -34,12 +34,16 @@ export default class EventTileFullDesktop extends React.Component {
             <button className="button__secondary button__full">Event times</button>
           </div>
           <div className="event-tile--promotions spacing-xxxx-tight">
-            <div className="type--small text__center">
-              <strong className="type--hot-show">Hot show</strong> - Selling out fast
-            </div>
-            <div className="type--small text__center">
-              <strong className="type--member">Discount</strong> - Fringe member pricing available
-            </div>
+            {this.props.eventData.hotshow && 
+              <div className="type--small text__center">
+                <strong className="type--hot-show">Hot show</strong> - Selling out fast
+              </div>
+            }
+            {this.props.eventData.fringemember && 
+              <div className="type--small text__center">
+                <strong className="type--member">Discount</strong> - Fringe member pricing available
+              </div>
+            }
           </div>
         </div>
       </div>
