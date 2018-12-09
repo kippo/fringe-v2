@@ -93,21 +93,15 @@ export default class EventBrowse extends React.Component {
   }
 
   render() {
-    const filterComponent = <EventFilters filterCallback={this.filterCallback} selectedFilters={this.state.selectedFilters} />;
-    if (this.state.dataLoaded) {
-      return(
-        <div>
-          {filterComponent}
+    return(
+      <div className="event-browse">
+        <div className="event-browse--filter">
+          <EventFilters filterCallback={this.filterCallback} selectedFilters={this.state.selectedFilters} />
+        </div>
+        <div className={"event-browse--results" + (this.state.dataLoaded ? "" : " event-browse--results__loading")}>
           <EventList eventData={this.state.eventData} />
         </div>
-      )
-    } else {
-        return(
-          <div>
-            {filterComponent}
-            Loading
-          </div>
-        )
-    }
+      </div>
+    )
   }
 };

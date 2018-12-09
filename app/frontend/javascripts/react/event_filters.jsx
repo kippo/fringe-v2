@@ -6,6 +6,7 @@ export default class EventFilters extends React.Component {
     this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"];
     this.venues = ["All", "Garden of Unearthly Delights", "Gluttony", "Black Cat"];
     this.selectedFilters = this.props.selectedFilters;
+    this.allKeyword = "All";
   }
 
   filterChange = e => {
@@ -52,7 +53,7 @@ export default class EventFilters extends React.Component {
   
   //Add or remove filter options stored as strings
   filterString = (filterKey, filterValue) => {
-    if (this.props.selectedFilters[filterKey] !== filterValue && filterValue != "All") {
+    if (this.props.selectedFilters[filterKey] !== filterValue && filterValue != this.allKeyword) {
       this.selectedFilters[filterKey] = filterValue;
     } else {
       delete this.selectedFilters[filterKey];
@@ -63,7 +64,7 @@ export default class EventFilters extends React.Component {
     if ('venue' in this.props.selectedFilters) {
       return this.props.selectedFilters.venue;
     } else {
-      return "All";
+      return this.allKeyword;
     }
   }
 
@@ -74,7 +75,7 @@ export default class EventFilters extends React.Component {
       } else {
         return false;
       }
-    } else if (value === 'All') {
+    } else if (value === this.allKeyword) {
       return true;
     } else {
       return false;
@@ -83,21 +84,23 @@ export default class EventFilters extends React.Component {
 
   render() {
     return(
-      <React.Fragment>
-        <div>
+      <div>
+        <ul className="spacing-xxxxxx-tight">
           {this.genres.map(genre =>
-            <label key={genre}>
-              <input 
-                type="checkbox" 
-                name="genre" 
-                value={genre} 
-                checked={this.checkCheckbox(genre)}
-                onChange={this.filterChange}
-              /> 
-              {genre}
-            </label>
+            <li key={genre}>
+              <label>
+                <input 
+                  type="checkbox" 
+                  name="genre" 
+                  value={genre} 
+                  checked={this.checkCheckbox(genre)}
+                  onChange={this.filterChange}
+                /> 
+                {genre}
+              </label>
+            </li>
           )}
-        </div>
+        </ul>
         <select 
           name="venue" 
           value={this.checkSelect()} 
@@ -107,7 +110,7 @@ export default class EventFilters extends React.Component {
             <option key={venue}>{venue}</option>
           )}
         </select>
-      </React.Fragment>
+      </div>
     )
   }
 };

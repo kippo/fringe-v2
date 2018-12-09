@@ -1,0 +1,28 @@
+.event-browse {
+  display: flex;
+}
+
+.event-browse--filter {
+	flex-basis: 280px;
+	flex-shrink: 0;
+	border-right: $divider;
+	padding: $xxxxx-large-unit $default-unit;
+}
+
+.event-browse--results {
+	flex-grow: 1;
+	padding: $xxxxx-large-unit;
+}
+
+.event-browse--results__loading {
+	position: relative;
+	&:before {
+		content: "";
+		background: rgba(255,255,255,0.5);
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: 1;
+	}
+}
