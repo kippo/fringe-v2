@@ -5,6 +5,7 @@ export default class EventFilters extends React.Component {
     super(props, );
     this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"];
     this.venues = ["All", "Garden of Unearthly Delights", "Gluttony", "Black Cat"];
+    this.rating = ["All", "G", "PG", "MA", "MA15+", "R"];
     this.selectedFilters = this.props.selectedFilters;
     this.allKeyword = "All";
   }
@@ -68,9 +69,9 @@ export default class EventFilters extends React.Component {
     }
   }
 
-  checkCheckbox = value => {
-    if ('genre' in this.props.selectedFilters) {
-      if (this.props.selectedFilters.genre.includes(value)) {
+  checkCheckbox = (type, value) => {
+    if (type in this.props.selectedFilters) {
+      if (this.props.selectedFilters[type].includes(value)) {
         return true;
       } else {
         return false;
@@ -93,10 +94,26 @@ export default class EventFilters extends React.Component {
                   type="checkbox" 
                   name="genre" 
                   value={genre} 
-                  checked={this.checkCheckbox(genre)}
+                  checked={this.checkCheckbox('genre', genre)}
                   onChange={this.filterChange}
                 /> 
                 {genre}
+              </label>
+            </li>
+          )}
+        </ul>
+        <ul className="spacing-xxxxxx-tight">
+          {this.rating.map(rating =>
+            <li key={rating}>
+              <label>
+                <input 
+                  type="checkbox" 
+                  name="rating" 
+                  value={rating} 
+                  checked={this.checkCheckbox('rating', rating)}
+                  onChange={this.filterChange}
+                /> 
+                {rating}
               </label>
             </li>
           )}
@@ -114,3 +131,6 @@ export default class EventFilters extends React.Component {
     )
   }
 };
+
+// Bug - Weirdness between filter sets
+// Possible rewrite - temporary obbject sent to state directory
