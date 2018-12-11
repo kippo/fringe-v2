@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React from "react";
 import QueryString from "query-string";
+import StickyBox from "react-sticky-box";
 import EventList from "./event_list.jsx";
 import EventFilters from "./event_filters.jsx";
 
@@ -96,6 +97,8 @@ export default class EventBrowse extends React.Component {
     return(
       <div className="event-browse">
         <div className="event-browse--filter">
+          <button data-toggle-anchor="example-1">Toggle</button>
+          <div data-toggle="example-1">Content</div>
           <EventFilters filterCallback={this.filterCallback} selectedFilters={this.state.selectedFilters} />
         </div>
         <div className={"event-browse--results" + (this.state.dataLoaded ? "" : " event-browse--results__loading")}>

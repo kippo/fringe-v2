@@ -1,4 +1,5 @@
 import React from "react";
+import FilterCheckbox from "./filter_checkbox.jsx";
 
 export default class EventFilters extends React.Component {
   constructor(props){
@@ -6,71 +7,66 @@ export default class EventFilters extends React.Component {
     this.genres = ["All", "Comedy", "Drama", "Circus", "Cabaret"];
     this.venues = ["All", "Garden of Unearthly Delights", "Gluttony", "Black Cat"];
     this.rating = ["All", "G", "PG", "MA", "MA15+", "R"];
-    this.selectedFilters = this.props.selectedFilters;
     this.allKeyword = "All";
   }
 
-  filterChange = e => {
-    let target = e.target;
-    if (target.type === "checkbox") {
-      this.filterArrays(target.name, target.value);
-    } else if (target.tagName === "SELECT") {
-      this.filterString(target.name, target.value);
-    }
-    this.props.filterCallback(this.selectedFilters);
-  }
-
   //Add or remove filter options stored as arrays
-  filterArrays = (filterKey, filterValue) => {
-    if (filterValue != "All") {
-      let filterArray = [];
-      
-      // If array already exists use it instead
-      if (Array.isArray(this.props.selectedFilters[filterKey])) {
-        filterArray = this.props.selectedFilters[filterKey];
-      }
+  filterArrays = (e) => {
+    let key = e.target.name;
+    let value = e.target.value;
+    let filters = this.props.selectedFilters;
 
+    // Initialize array if it doesn't exisit
+    if (!filters[key]) filters[key] = [];
+
+    if (value != "All") {
       // Check to see if filter value is already in array, if not add it
-      if (!filterArray.includes(filterValue)) {
-        filterArray.push(filterValue);
+      if (!filters[key].includes(value)) {
+        filters[key].push(value);
       } else {
       // Else remove it
-        let filterValueIndex = filterArray.indexOf(filterValue);
-        if (filterValueIndex > -1) {
-          filterArray.splice(filterValueIndex, 1);
+        let index = filters[key].indexOf(value);
+        if (index > -1) {
+          filters[key].splice(index, 1);
         }
       }
 
-      // If array isn't empty set key to updated array else remove key
-      if (filterArray.length != 0) {
-        this.selectedFilters[filterKey] = filterArray;
-      } else {
-        delete this.selectedFilters[filterKey];
+      // If array is empty remove it
+      if (filters[key].length == 0) {
+        delete filters[key];
       }
     } else {
-      delete this.selectedFilters[filterKey];
+      delete filters[key];
     }
+
+    this.props.filterCallback(filters);
   }
   
   //Add or remove filter options stored as strings
-  filterString = (filterKey, filterValue) => {
-    if (this.props.selectedFilters[filterKey] !== filterValue && filterValue != this.allKeyword) {
-      this.selectedFilters[filterKey] = filterValue;
+  filterString = (e) => {
+    let key = e.target.name;
+    let value = e.target.value;
+    let filters = this.props.selectedFilters;
+  
+    if (filters[key] !== value && value != this.allKeyword) {
+      filters[key] = value;
     } else {
-      delete this.selectedFilters[filterKey];
+      delete filters[key];
     }
+
+    this.props.filterCallback(filters);
   }
 
-  checkSelect = () => {
-    if ('venue' in this.props.selectedFilters) {
-      return this.props.selectedFilters.venue;
+  checkSelect = (type) => {
+    if (this.props.selectedFilters[type]) {
+      return this.props.selectedFilters[type];
     } else {
       return this.allKeyword;
     }
   }
 
   checkCheckbox = (type, value) => {
-    if (type in this.props.selectedFilters) {
+    if (this.props.selectedFilters[type]) {
       if (this.props.selectedFilters[type].includes(value)) {
         return true;
       } else {
@@ -95,7 +91,7 @@ export default class EventFilters extends React.Component {
                   name="genre" 
                   value={genre} 
                   checked={this.checkCheckbox('genre', genre)}
-                  onChange={this.filterChange}
+                  onChange={this.filterArrays}
                 /> 
                 {genre}
               </label>
@@ -111,7 +107,7 @@ export default class EventFilters extends React.Component {
                   name="rating" 
                   value={rating} 
                   checked={this.checkCheckbox('rating', rating)}
-                  onChange={this.filterChange}
+                  onChange={this.filterArrays}
                 /> 
                 {rating}
               </label>
@@ -120,8 +116,8 @@ export default class EventFilters extends React.Component {
         </ul>
         <select 
           name="venue" 
-          value={this.checkSelect()} 
-          onChange={this.filterChange}
+          value={this.checkSelect('venue')} 
+          onChange={this.filterString}
         >
           {this.venues.map(venue =>
             <option key={venue}>{venue}</option>
@@ -131,6 +127,3 @@ export default class EventFilters extends React.Component {
     )
   }
 };
-
-// Bug - Weirdness between filter sets
-// Possible rewrite - temporary obbject sent to state directory
