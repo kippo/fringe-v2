@@ -33,9 +33,9 @@ export default class EventTileFull extends React.Component {
 
   render() {
     if(this.state.isMobile) {
-      return <EventTileFullMobile eventData={this.props.eventData} />
+      return <EventTileFullMobile {...this.props} />
     } else {
-      return <EventTileFullDesktop eventData={this.props.eventData} />
+      return <EventTileFullDesktop {...this.props} />
     }
   }
 };
