@@ -7,7 +7,7 @@ export default class EventTileFullDesktop extends React.Component {
     return(
       <div className="event-tile__desktop">
         <div className="event-tile--image-area">
-          <Favourite />
+          <Favourite {...this.props} />
           <div>
             <div>
               <img src={"https://source.unsplash.com/random/300x300?sig=" + this.props.eventData.key} />
@@ -26,7 +26,7 @@ export default class EventTileFullDesktop extends React.Component {
           <div>
             {this.props.eventData.description}
           </div>
-          <UserRating />
+          <UserRating {...this.props} />
         </div>
         <div className="event-tile--aside spacing-xx-tight">
           <div className="event-tile--actions spacing-xxxxx-tight">

@@ -1,0 +1,18 @@
+.favourite-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: $black;
+  padding: 1rem;
+  svg {
+    height: 16px;
+    width: 16px;
+    opacity: .5;
+    display: block;
+  }
+  &.favourite-button__favorited {
+    svg {
+      opacity: 1;
+    }
+  }
+}

@@ -26,7 +26,10 @@
       var Ornicons = {
         chevronLeft: "<%= escape_javascript icon("chevron_left") %>",
         chevronRight: "<%= escape_javascript icon("chevron_right") %>",
-        close: "<%= escape_javascript icon("close") %>"
+        close: "<%= escape_javascript icon("close") %>",
+        starFull: "<%= escape_javascript icon("star") %>",
+        starEmpty: "<%= escape_javascript icon("star", fill: "#D8D8D8") %>",
+        starWhite: "<%= escape_javascript icon("star", fill: "#FFF") %>"
       }
     </script>
     <%= javascript_pack_tag "application" %>

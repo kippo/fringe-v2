@@ -1,0 +1,20 @@
+.user-rating {
+  display: flex;
+  align-items: center;
+}
+
+.user-rating--icons {
+  display: flex;
+  margin-right: $xxxxx-small-unit;
+}
+
+.user-rating--icon {
+  & + .user-rating--icon {
+    margin-left: $xxxxxxx-small-unit;
+  }
+  svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+}
