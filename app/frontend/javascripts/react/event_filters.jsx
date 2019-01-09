@@ -1,5 +1,6 @@
 import React from "react";
 import FilterCheckbox from "./filter_checkbox.jsx";
+import FlatPicker from "flatpickr";
 
 export default class EventFilters extends React.Component {
   constructor(props){
@@ -8,6 +9,7 @@ export default class EventFilters extends React.Component {
     this.venues = ["All", "Garden of Unearthly Delights", "Gluttony", "Black Cat"];
     this.rating = ["All", "G", "PG", "MA", "MA15+", "R"];
     this.allKeyword = "All";
+    this.datePicker = React.createRef();
   }
 
   //Add or remove filter options stored as arrays
@@ -79,9 +81,23 @@ export default class EventFilters extends React.Component {
     }
   }
 
+  onChange(selectedDates) {
+    console.log(selectedDates);
+  }
+
+  componentDidMount() {
+    flatpickr(this.datePicker.current, {
+      onChange: this.onChange,
+      static: true
+    });
+  }
+
   render() {
     return(
       <div>
+        <div>
+          <input type="text" id="start-date" ref={this.datePicker} />
+        </div>
         <ul className="spacing-xxxxxx-tight">
           {this.genres.map(genre =>
             <li key={genre}>
