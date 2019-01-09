@@ -86,7 +86,8 @@ export default class EventFilters extends React.Component {
   }
 
   componentDidMount() {
-    flatpickr(this.datePicker.current, {
+    // This should probably be destroyed when compoennt unmounts. How??
+    this.fp = flatpickr(this.datePicker.current, {
       onChange: this.onChange,
       static: true
     });
