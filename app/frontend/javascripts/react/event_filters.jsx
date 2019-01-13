@@ -1,6 +1,9 @@
 import React from "react";
 import FilterCheckbox from "./filter_checkbox.jsx";
 import FlatPicker from "flatpickr";
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import {SingleDatePicker} from 'react-dates';
 
 export default class EventFilters extends React.Component {
   constructor(props){
@@ -10,6 +13,10 @@ export default class EventFilters extends React.Component {
     this.rating = ["All", "G", "PG", "MA", "MA15+", "R"];
     this.allKeyword = "All";
     this.datePicker = React.createRef();
+    this.state = {
+      date: null,
+      focused: false
+    }
   }
 
   //Add or remove filter options stored as arrays
@@ -96,6 +103,23 @@ export default class EventFilters extends React.Component {
   render() {
     return(
       <div>
+        <div>
+          <SingleDatePicker
+            date={this.state.date}
+            onDateChange={date => this.setState({ date })}
+            focused={this.state.focused}
+            onFocusChange={({ focused }) => this.setState({ focused })}
+            id="react_date_picker"
+            numberOfMonths={1}
+            monthFormat="MMM YYYY"
+            noBorder={true}
+            block={true}
+            hideKeyboardShortcutsPanel={true}
+            //daySize={40}
+            //horizontalMonthPadding={12}
+            //verticalSpacing={12}
+          />
+        </div>
         <div>
           <input type="text" id="start-date" ref={this.datePicker} />
         </div>

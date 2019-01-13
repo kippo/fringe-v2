@@ -8,10 +8,6 @@
 	border-right: $divider;
 	padding: $xxxxx-large-unit $default-unit;
 	align-items: flex-start;
-	& > div {
-		position: sticky;
-		top: 20px;
-	}
 }
 
 .event-browse--results {
