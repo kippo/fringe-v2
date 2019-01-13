@@ -5,25 +5,29 @@ export default class favourite extends React.Component {
     super(props);
     this.state = {
       favorited: false,
-      currentFavourites: []
     }
   }
 
-  getCurrentFavourites = () => {
-    this.setState({
-      currentFavourites: JSON.parse(localStorage.getItem('userFavourites'))
-    })
+  setFavourite = () => {
+    
   }
 
-  handleFavourite = () => {
-    this.setState({favorited: !this.state.favorited});
-    let favouritesArray = ["Foo"];
-    localStorage.userFavourites = JSON.stringify(favouritesArray);
-    this.getCurrentFavourites();
-  }
+  handleFavourite = () => {    
+    let favouritesArray = [];
+    
+    if (localStorage.getItem('userFavourites')) {
+      favouritesArray = JSON.parse(localStorage.getItem('userFavourites'));
+    }
 
-  componentDidMount() {
-    this.getCurrentFavourites();
+    if (!favouritesArray.includes(this.props.eventData.key)) {
+      favouritesArray.push(this.props.eventData.key);
+    } else {
+      let index = favouritesArray.indexOf(this.props.eventData.key);
+      if (index > -1) {
+        favouritesArray[this.props.eventData.key].splice(index, 1);
+      }
+    }
+    localStorage.setItem('userFavourites', JSON.stringify(favouritesArray));
   }
 
   render() {
@@ -34,3 +38,4 @@ export default class favourite extends React.Component {
 };
 
 // Add favourites to local storage
+// Add to props first then set inital props value to local storage
