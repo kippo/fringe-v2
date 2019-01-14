@@ -1,8 +1,6 @@
 import React from "react";
-import MultiSelectList from "./filter_controls/multi_select_list.jsx";
-import VenueSearch from "./filter_controls/venue_search.jsx";
-import DateSelect from "./filter_controls/date_select.jsx";
 import FilterMobile from "./filter_mobile.jsx";
+import FilterDesktop from "./filter_desktop.jsx";
 
 
 export default class eventFilterUI extends React.Component {
@@ -75,26 +73,7 @@ export default class eventFilterUI extends React.Component {
   render() {
     return(
       <React.Fragment>
-        <div>
-          <div>
-            <MultiSelectList data={this.filters.genres} filterName="Genre" isMobile={false} />
-            <DateSelect />
-            <DateSelect />
-            <VenueSearch data={this.filters.venues} />
-            <MultiSelectList data={this.filters.accessibility} filterName="Accessibility" isMobile={false} />
-          </div>
-          <div>
-            <MultiSelectList data={this.filters.rating} filterName="Rating" isMobile={false} />
-            <div>Start Time</div>
-            <div>End Time</div>
-            <MultiSelectList data={this.filters.priceTypes} filterName="Price Type" isMobile={false} />
-            <div>Price Range (Slider)</div>
-            <MultiSelectList data={this.filters.moods} filterName="Moods" isMobile={false} />
-            <MultiSelectList data={this.filters.programs} filterName="Programs" isMobile={false} />
-            <div>Family Friendly (Single)</div>
-            <div>Auslan Translation</div>
-          </div>
-        </div>
+        <FilterDesktop filters={this.filters} />
         <FilterMobile filters={this.filters} />
       </React.Fragment>
     )
