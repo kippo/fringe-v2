@@ -8,23 +8,21 @@ class MultiSelectList extends React.Component {
   render() {
     return(
       <div>
-        <div>Genres</div>
         <div>
-          <div>
-            <span>3 selected</span>
-            <button>Clear</button>
-          </div>
-          <ul>
-            {this.props.data.map(i => {
-              return(
-                <li key={i}>
-                  <span>{i}</span>
-                </li>
-              )
-            })}
-          </ul>
+          <span>{this.props.filterName}</span>
+          <span>3 selected</span>
+          <button>Clear</button>
         </div>
-      </div>     
+        <ul>
+          {this.props.data.map(i => {
+            return(
+              <li key={i}>
+                <span>{i}</span>
+              </li>
+            )
+          })}
+        </ul>
+      </div>   
     )
   }
 };
