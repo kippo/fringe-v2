@@ -12,8 +12,8 @@ export default class FilterMobile extends React.Component {
 
   render() {
     return(
-      <div>
-        <div className="mobile-filter--primary-list">
+      <div className="filter-mobile">
+        <div className="filter-mobile--primary-list">
           <ul>
             <li onClick={() => this.setState({activeMobileFilter:this.props.filters.programs})}>Genres</li>
             <li>Date</li>
@@ -28,7 +28,7 @@ export default class FilterMobile extends React.Component {
             <li>Family Friendly</li>
           </ul>
         </div>
-        <div className="mobile-filter--secondary-list">
+        <div className="filter-mobile--secondary-list">
           <MultiSelectList data={this.state.activeMobileFilter} filterName={this.state.activeMobileFilterLabel} isMobile={true} />
         </div>
       </div>
