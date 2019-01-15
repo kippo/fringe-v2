@@ -22,3 +22,11 @@
   flex-basis: 100%;
   flex-shrink: 0;
 }
+
+.filter-mobile__open {
+  display: flex;
+}
+
+.filter-mobile__closed {
+  display: none;
+}

@@ -2,7 +2,6 @@ import React from "react";
 import FilterMobile from "./filter_mobile.jsx";
 import FilterDesktop from "./filter_desktop.jsx";
 
-
 export default class eventFilterUI extends React.Component {
   constructor(props){
     super(props);
@@ -68,14 +67,58 @@ export default class eventFilterUI extends React.Component {
         "Social Change"
       ]
     }
+    this.state = {
+      mobileFilterOpen: false,
+      isMobile: null
+    }
+  }
+
+  toggleMobileFilter = () => {
+    let toggle = !this.state.mobileFilterOpen;
+    this.setState({mobileFilterOpen:toggle});
+  }
+
+  // Conditional display of filters (Should make this reusable for other features)
+
+  detectDeviceWidth = () => {
+    if(window.innerWidth < 860) {
+      this.setState({isMobile: true});
+    } else {
+      this.setState({isMobile: false});
+    }
+  }
+
+  throttleResize = () => {
+    window.requestAnimationFrame(this.detectDeviceWidth);
+  }
+
+  componentDidMount() {
+    this.detectDeviceWidth();
+    window.addEventListener('resize', this.throttleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.throttleResize);
   }
 
   render() {
-    return(
-      <React.Fragment>
-        <FilterDesktop filters={this.filters} />
-        <FilterMobile filters={this.filters} />
+    if(this.state.isMobile) {
+      return(
+        <React.Fragment>
+        <button onClick={this.toggleMobileFilter}>Open filter</button>
+        <FilterMobile 
+          filters={this.filters}
+          mobileFilterOpen={this.state.mobileFilterOpen}
+          mobileFilterCallback={this.toggleMobileFilter} 
+        />
       </React.Fragment>
-    )
+    )} else {
+      return(
+        <React.Fragment>
+          <FilterDesktop 
+            filters={this.filters} 
+          />
+        </React.Fragment>
+    )}
   }
 };
