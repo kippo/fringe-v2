@@ -7,31 +7,27 @@ export default class FilterMobile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      activeFilterLabel: null,
-      activeFilterData: null,
-      activeFilterType: null,
-      filterActive: false
+      activeFilter: null,
+      filterOpen: false
     }
   }
 
-  // Set state based on which filter has been selected. Used to control which filter is currently being displayed in the drawer.
-  filterSelect = (label, data, type) => {
+  // Set which filter filter group is active and open filter detail pane
+  filterSelect = (activeFilter) => {
     this.setState({
-      activeFilterLabel: label,
-      activeFilterData: data,
-      activeFilterType: type,
-      filterActive: true,
+      activeFilter: activeFilter,
+      filterOpen: true,
     });
   }
 
   closeFilterDrawer = () => {
-    this.setState({filterActive:false});
+    this.setState({filterOpen:false});
     this.props.mobileFilterCallback();
   }
 
   backCallback = () => {
     this.setState({
-      filterActive: false
+      filterOpen: false
     });
   }
 
@@ -39,45 +35,99 @@ export default class FilterMobile extends React.Component {
     // Conditionally set which type of filter to render based on state.activeFilterType. Possibly create a conditioanl for each rather than relying on props.
     let filterComponent;
     
-    if (this.state.activeFilterType === 'multiSelect') {
+    if (this.state.activeFilter === 'genre') {
       filterComponent = 
         <MultiSelectList 
-          data={this.state.activeFilterData}
-          filterName={this.state.activeFilterLabel}
+          data={this.props.filters.genre}
+          filterName="Genres"
           isMobile={true}
           backCallback={this.backCallback}
         />;
-    } else if (this.state.activeFilterType === "dateSelect") {
+    } else if (this.state.activeFilter === 'date') {
       filterComponent = 
         <DateSelect 
           backCallback={this.backCallback}
         />;
-    } else if (this.state.activeFilterType === "venueSearch") {
+    } else if (this.state.activeFilter === 'time') {
       filterComponent = 
-        <VenueSearch 
+        <DateSelect 
           backCallback={this.backCallback}
         />;
-    }
+    } else if (this.state.activeFilter === 'venue') {
+      filterComponent = 
+        <VenueSearch 
+          data={this.props.filters.venue}
+          backCallback={this.backCallback}
+        />;
+    } else if (this.state.activeFilter === 'accessibility') {
+      filterComponent = 
+        <MultiSelectList 
+          data={this.props.filters.accessibility}
+          filterName="Accessibility"
+          isMobile={true}
+          backCallback={this.backCallback}
+        />;
+    } else if (this.state.activeFilter === 'rating') {
+      filterComponent = 
+        <MultiSelectList 
+          data={this.props.filters.rating}
+          filterName="Rating"
+          isMobile={true}
+          backCallback={this.backCallback}
+        />;
+    } else if (this.state.activeFilter === 'price-type') {
+      filterComponent = 
+        <MultiSelectList 
+          data={this.props.filters.priceType}
+          filterName="Price Type"
+          isMobile={true}
+          backCallback={this.backCallback}
+        />;
+    } else if (this.state.activeFilter === 'price-range') {
+      filterComponent = 
+        <MultiSelectList 
+          data={this.props.filters.program}
+          filterName="Price Range"
+          isMobile={true}
+          backCallback={this.backCallback}
+        />;
+    } else if (this.state.activeFilter === 'mood') {
+      filterComponent = 
+        <MultiSelectList 
+          data={this.props.filters.mood}
+          filterName="Moods"
+          isMobile={true}
+          backCallback={this.backCallback}
+        />;
+    }  else if (this.state.activeFilter === 'program') {
+      filterComponent = 
+        <MultiSelectList 
+          data={this.props.filters.program}
+          filterName="Moods"
+          isMobile={true}
+          backCallback={this.backCallback}
+        />;
+    } 
     
     return(
       <div className={`
         filter-mobile
-        ${this.state.filterActive ? "filter-mobile__active" : "filter-mobile__inactive"}
+        ${this.state.filterOpen ? "filter-mobile__active" : "filter-mobile__inactive"}
         ${this.props.mobileFilterOpen ? "filter-mobile__open" : "filter-mobile__closed"}`
       }>
         <button onClick={this.closeFilterDrawer}>Close</button>
         <div className="filter-mobile--primary-list">
           <ul>
-            <li onClick={() => this.filterSelect("Genres", this.props.filters.genres, 'multiSelect')}>Genres</li>
-            <li onClick={() => this.filterSelect("Dates", '', 'dateSelect')}>Date</li>
-            <li>Time of day</li>
-            <li>Venue</li>
-            <li>Accessibility</li>
-            <li>Rating</li>
-            <li>Price Type</li>
-            <li>Price Range</li>
-            <li onClick={() => this.filterSelect("Moods", this.props.filters.moods, 'multiSelect')}>Moods</li>
-            <li onClick={() => this.filterSelect("Programs", this.props.filters.programs, 'multiSelect')}>Program</li>
+            <li onClick={() => this.filterSelect("genre")}>Genres</li>
+            <li onClick={() => this.filterSelect("date")}>Dates</li>
+            <li onClick={() => this.filterSelect("time")}>Time of Day</li>
+            <li onClick={() => this.filterSelect("venue")}>Venue</li>
+            <li onClick={() => this.filterSelect("accessibility")}>Accessibility</li>
+            <li onClick={() => this.filterSelect("rating")}>Rating</li>
+            <li onClick={() => this.filterSelect("price-type")}>Price Type</li>
+            <li onClick={() => this.filterSelect("price-range")}>Price Range</li>
+            <li onClick={() => this.filterSelect("mood")}>Moods</li>
+            <li onClick={() => this.filterSelect("program")}>Programs</li>
             <li>Family Friendly</li>
           </ul>
         </div>

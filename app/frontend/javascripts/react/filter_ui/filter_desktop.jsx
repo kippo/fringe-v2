@@ -21,46 +21,47 @@ export default class FilterDesktop extends React.Component {
     return(
       <div className="filter-desktop">
         <div>
-          <DesktopFilterWrapper>
-            <MultiSelectList data={this.props.filters.genres} filterName="Genre" isMobile={false} />
+          <DesktopFilterWrapper label="Genres">
+            <MultiSelectList data={this.props.filters.genre} isMobile={false} />
           </DesktopFilterWrapper>
           
-          <DesktopFilterWrapper>
+          <DesktopFilterWrapper label="Dates">
             <DateSelect />
           </DesktopFilterWrapper>
           
-          <DesktopFilterWrapper>
-            <VenueSearch data={this.props.filters.venues} />
+          <DesktopFilterWrapper label="Venues">
+            <VenueSearch data={this.props.filters.venue} />
           </DesktopFilterWrapper>
           
-          <DesktopFilterWrapper>
-            <MultiSelectList data={this.props.filters.accessibility} filterName="Accessibility" isMobile={false} />
+          <DesktopFilterWrapper label="Accessibility">
+            <MultiSelectList data={this.props.filters.accessibility} isMobile={false} />
           </DesktopFilterWrapper>
           <div onClick={this.toggleMoreFilters}>More Filters</div>
         </div>
+
         <div className={`filter-desktop--more ${this.state.moreFiltersOpen ? "filter-desktop--more__open" : "filter-desktop--more__closed"}`}>
-          <DesktopFilterWrapper>
+          <DesktopFilterWrapper label="Accessibility">
             <MultiSelectList data={this.props.filters.rating} filterName="Rating" isMobile={false} />
           </DesktopFilterWrapper>
           
-          <DesktopFilterWrapper>
+          <DesktopFilterWrapper label="Time of day">
             <div>Time of day</div>
           </DesktopFilterWrapper>
           
-          <DesktopFilterWrapper>
-            <MultiSelectList data={this.props.filters.priceTypes} filterName="Price Type" isMobile={false} />
+          <DesktopFilterWrapper label="Price type">
+            <MultiSelectList data={this.props.filters.priceType} isMobile={false} />
           </DesktopFilterWrapper>
 
-          <DesktopFilterWrapper>
+          <DesktopFilterWrapper label="Accessibility">
             <div>Price Range (Slider)</div>
           </DesktopFilterWrapper>
 
-          <DesktopFilterWrapper>
-            <MultiSelectList data={this.props.filters.moods} filterName="Moods" isMobile={false} />
+          <DesktopFilterWrapper label="Moods">
+            <MultiSelectList data={this.props.filters.mood} isMobile={false} />
           </DesktopFilterWrapper>
 
-          <DesktopFilterWrapper>
-            <MultiSelectList data={this.props.filters.programs} filterName="Programs" isMobile={false} />
+          <DesktopFilterWrapper label="Programs">
+            <MultiSelectList data={this.props.filters.program} isMobile={false} />
           </DesktopFilterWrapper>
           
           <div>Family Friendly (Single)</div>

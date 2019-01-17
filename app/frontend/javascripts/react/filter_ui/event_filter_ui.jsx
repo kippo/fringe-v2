@@ -6,21 +6,15 @@ export default class eventFilterUI extends React.Component {
   constructor(props){
     super(props);
     this.filters = {
-      genres: [
+      genre: [
         "Comedy",
         "Drama",
         "Circus",
         "Cabaret"
-      ], venues: [
+      ], venue: [
         "Garden of Unearthly Delights",
         "Gluttony",
         "Black Cat"
-      ], rating: [
-        "G",
-        "PG",
-        "MA",
-        "MA15+",
-        "R"
       ], accessibility: [
         "Wheelchair Access", 
         "Accessible Parking", 
@@ -32,7 +26,7 @@ export default class eventFilterUI extends React.Component {
         "Tactile Tours",
         "Hearing Loop",
         "Language No Barrier"
-      ], priceTypes: [
+      ], priceType: [
         "BankSA Customer",
         "BankSA Support Acts",
         "Fringe Member",
@@ -44,12 +38,12 @@ export default class eventFilterUI extends React.Component {
         "FREE",
         "Passholder Free",
         "Passholder Discount"
-      ], suitabilty: [
+      ], rating: [
         "G",
         "PG",
         "M",
         "R18+"
-      ], moods: [
+      ], mood: [
         "Party",
         "Unwind",
         "Be Moved",
@@ -59,7 +53,7 @@ export default class eventFilterUI extends React.Component {
         "Laugh Until I Cry",
         "Experience the Extreme",
         "Experience Something Left of Centre"
-      ], programs: [
+      ], program: [
         "Honey Pot",
         "YEP!",
         "Science of the Fringe",
