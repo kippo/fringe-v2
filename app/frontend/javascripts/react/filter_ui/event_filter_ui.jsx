@@ -59,6 +59,14 @@ export default class eventFilterUI extends React.Component {
         "Science of the Fringe",
         "Sick of the Fringe",
         "Social Change"
+      ], priceRange: [
+        {
+          label: "Price (max)",
+          data: [5,10,15,20,30,40,50]
+        },{
+          label: "Price (min)",
+          data: [5,10,15,20,30,40,50]
+        }
       ]
     }
     this.state = {

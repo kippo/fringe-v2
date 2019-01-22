@@ -3,7 +3,7 @@
   width: calc(100vw - 52px);
   max-width: 400px;
   background: red;
-  overflow: hidden;
+  overflow: visible;
   right: 0;
   top: 0;
   bottom: 0;
@@ -29,4 +29,10 @@
 
 .filter-mobile__closed {
   display: none;
+}
+
+.filter-mobile--close {
+  position: absolute;
+  top: 0;
+  right: 100%;
 }

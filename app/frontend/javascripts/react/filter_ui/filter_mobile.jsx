@@ -2,6 +2,7 @@ import React from "react";
 import MultiSelectList from "./filter_controls/multi_select_list.jsx";
 import DateSelect from "./filter_controls/date_select.jsx";
 import VenueSearch from "./filter_controls/venue_search.jsx";
+import SelectMenu from "./filter_controls/select_menu.jsx";
 
 export default class FilterMobile extends React.Component {
   constructor(props){
@@ -50,7 +51,7 @@ export default class FilterMobile extends React.Component {
         />;
     } else if (this.state.activeFilter === 'time') {
       filterComponent = 
-        <DateSelect 
+        <SelectMenu 
           backCallback={this.backCallback}
         />;
     } else if (this.state.activeFilter === 'venue') {
@@ -85,10 +86,8 @@ export default class FilterMobile extends React.Component {
         />;
     } else if (this.state.activeFilter === 'price-range') {
       filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.program}
-          filterName="Price Range"
-          isMobile={true}
+        <SelectMenu
+          data={this.props.filters.priceRange}
           backCallback={this.backCallback}
         />;
     } else if (this.state.activeFilter === 'mood') {
@@ -115,7 +114,7 @@ export default class FilterMobile extends React.Component {
         ${this.state.filterOpen ? "filter-mobile__active" : "filter-mobile__inactive"}
         ${this.props.mobileFilterOpen ? "filter-mobile__open" : "filter-mobile__closed"}`
       }>
-        <button onClick={this.closeFilterDrawer}>Close</button>
+        <button className="filter-mobile--close" onClick={this.closeFilterDrawer}>Close</button>
         <div className="filter-mobile--primary-list">
           <ul>
             <li onClick={() => this.filterSelect("genre")}>Genres</li>
