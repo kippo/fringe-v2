@@ -1,5 +1,4 @@
 import React from "react";
-import FilterCheckbox from "./filter_checkbox.jsx";
 import FlatPicker from "flatpickr";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
@@ -17,53 +16,6 @@ export default class EventFilters extends React.Component {
       date: null,
       focused: false
     }
-  }
-
-  //Add or remove filter options stored as arrays
-  filterArrays = (e) => {
-    let key = e.target.name;
-    let value = e.target.value;
-    let filters = this.props.selectedFilters;
-
-    // Initialize array if it doesn't exisit
-    if (!filters[key]) filters[key] = [];
-
-    if (value != "All") {
-      // Check to see if filter value is already in array, if not add it
-      if (!filters[key].includes(value)) {
-        filters[key].push(value);
-      } else {
-      // Else remove it
-        let index = filters[key].indexOf(value);
-        if (index > -1) {
-          filters[key].splice(index, 1);
-        }
-      }
-
-      // If array is empty remove it
-      if (filters[key].length == 0) {
-        delete filters[key];
-      }
-    } else {
-      delete filters[key];
-    }
-
-    this.props.filterCallback(filters);
-  }
-  
-  //Add or remove filter options stored as strings
-  filterString = (e) => {
-    let key = e.target.name;
-    let value = e.target.value;
-    let filters = this.props.selectedFilters;
-  
-    if (filters[key] !== value && value != this.allKeyword) {
-      filters[key] = value;
-    } else {
-      delete filters[key];
-    }
-
-    this.props.filterCallback(filters);
   }
 
   checkSelect = (type) => {
@@ -132,7 +84,7 @@ export default class EventFilters extends React.Component {
                   name="genre" 
                   value={genre} 
                   checked={this.checkCheckbox('genre', genre)}
-                  onChange={this.filterArrays}
+                  onChange={this.props.filterArrays}
                 /> 
                 {genre}
               </label>
@@ -148,7 +100,7 @@ export default class EventFilters extends React.Component {
                   name="rating" 
                   value={rating} 
                   checked={this.checkCheckbox('rating', rating)}
-                  onChange={this.filterArrays}
+                  onChange={this.props.filterArrays}
                 /> 
                 {rating}
               </label>
@@ -158,7 +110,7 @@ export default class EventFilters extends React.Component {
         <select 
           name="venue" 
           value={this.checkSelect('venue')} 
-          onChange={this.filterString}
+          onChange={this.props.filterString}
         >
           {this.venues.map(venue =>
             <option key={venue}>{venue}</option>

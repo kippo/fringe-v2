@@ -1,8 +1,8 @@
 import React from "react";
-import MultiSelectList from "./filter_controls/multi_select_list.jsx";
-import VenueSearch from "./filter_controls/venue_search.jsx";
-import DateSelect from "./filter_controls/date_select.jsx";
-import DesktopFilterWrapper from "./filter_controls/desktop_filter_wrapper.jsx";
+import MultiSelectList from "./filter-controls/multi_select_list.jsx";
+import VenueSearch from "./filter-controls/venue_search.jsx";
+import DateSelect from "./filter-controls/date_select.jsx";
+import DesktopFilterWrapper from "./filter-controls/desktop_filter_wrapper.jsx";
 
 export default class FilterDesktop extends React.Component {
   constructor(props){
@@ -21,9 +21,14 @@ export default class FilterDesktop extends React.Component {
     return(
       <div className="filter-desktop">
         <div>
-          <DesktopFilterWrapper label="Genres">
-            <MultiSelectList data={this.props.filters.genre} isMobile={false} />
-          </DesktopFilterWrapper>
+
+            <MultiSelectList 
+              data={this.props.filters.genre}
+              filterType={"genre"}
+              isMobile={false} 
+              filterArrays={this.props.filterArrays}
+            />
+
           
           <DesktopFilterWrapper label="Dates">
             <DateSelect />

@@ -23,6 +23,12 @@ class MultiSelectList extends React.Component {
             return(
               <li key={i}>
                 <span>{i}</span>
+                <input 
+                  type="checkbox" 
+                  name={this.props.filterType} 
+                  value={i}
+                  onChange={this.props.filterArrays}
+                /> 
               </li>
             )
           })}

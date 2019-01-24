@@ -1,8 +1,8 @@
 import React from "react";
-import MultiSelectList from "./filter_controls/multi_select_list.jsx";
-import DateSelect from "./filter_controls/date_select.jsx";
-import VenueSearch from "./filter_controls/venue_search.jsx";
-import SelectMenu from "./filter_controls/select_menu.jsx";
+import MultiSelectList from "./filter-controls/multi_select_list.jsx";
+import DateSelect from "./filter-controls/date_select.jsx";
+import VenueSearch from "./filter-controls/venue_search.jsx";
+import SelectMenu from "./filter-controls/select_menu.jsx";
 
 export default class FilterMobile extends React.Component {
   constructor(props){

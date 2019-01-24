@@ -1,5 +1,5 @@
 import React from "react";
-import EventTileFull from "./event_tile_full.jsx";
+import EventTileFull from "../event-tiles/event_tile_full.jsx";
 
 export default class EventList extends React.Component {
   constructor(props){

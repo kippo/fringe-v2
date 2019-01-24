@@ -1,6 +1,6 @@
 import React from "react";
-import UserRating from "./user_rating.jsx";
-import Favourite from "./favourite.jsx";
+import UserRating from "../user_rating.jsx";
+import Favourite from "../favourite.jsx";
 
 export default class EventTileFullMobile extends React.Component {
   render() {
