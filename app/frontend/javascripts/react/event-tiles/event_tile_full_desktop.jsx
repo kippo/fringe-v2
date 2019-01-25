@@ -1,26 +1,17 @@
 import React from "react";
-import React from "tiny-slider-react";
+import EventTileImage from "./event_tile_image.jsx";
 import UserRating from "../user_rating.jsx";
-import Favourite from "../favourite.jsx";
 
 export default class EventTileFullDesktop extends React.Component {
   constructor(props){
     super(props);
-    this.sliderSettings = {
-      
-    }
   }
-  
+
   render() {
     return(
       <div className="event-tile__desktop">
         <div className="event-tile--image-area">
-          <Favourite {...this.props} />
-          <div>
-            <div>
-              <img src={"https://source.unsplash.com/random/300x300?sig=" + this.props.eventData.key} />
-            </div>
-          </div>
+          <EventTileImage eventData={this.props.eventData} />
         </div>
         <div className="event-tile--content spacing-xxx-tight">
           <h2>

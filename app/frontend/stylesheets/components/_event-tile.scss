@@ -1,15 +1,5 @@
 // Desktop tile
 
-.event-tile__desktop, .event-tile__mobile {
-  img {
-    display: block;
-  }
-
-  .event-tile--image-area {
-    position: relative;
-  }
-}
-
 .event-tile__desktop {
   display: flex; 
 
@@ -26,6 +16,10 @@
 
   .event-tile--aside {
     flex: 1 0 180px;
+  }
+
+  .favourite-button {
+    z-index: 1;
   }
 }
 
@@ -53,5 +47,14 @@
       top: 0;
       left: 0;
     }
+  }
+}
+
+// Compact tile image
+
+.event-tile--image {
+  position: relative;
+  img {
+    display: block;
   }
 }
