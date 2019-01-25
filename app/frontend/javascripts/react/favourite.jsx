@@ -13,21 +13,9 @@ export default class favourite extends React.Component {
   }
 
   handleFavourite = () => {    
-    let favouritesArray = [];
-    
-    if (localStorage.getItem('userFavourites')) {
-      favouritesArray = JSON.parse(localStorage.getItem('userFavourites'));
-    }
-
-    if (!favouritesArray.includes(this.props.eventData.key)) {
-      favouritesArray.push(this.props.eventData.key);
-    } else {
-      let index = favouritesArray.indexOf(this.props.eventData.key);
-      if (index > -1) {
-        favouritesArray[this.props.eventData.key].splice(index, 1);
-      }
-    }
-    localStorage.setItem('userFavourites', JSON.stringify(favouritesArray));
+    this.setState(
+      {favorited: !this.state.favorited}
+    );
   }
 
   render() {

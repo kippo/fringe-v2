@@ -1,8 +1,16 @@
 import React from "react";
+import React from "tiny-slider-react";
 import UserRating from "../user_rating.jsx";
 import Favourite from "../favourite.jsx";
 
 export default class EventTileFullDesktop extends React.Component {
+  constructor(props){
+    super(props);
+    this.sliderSettings = {
+      
+    }
+  }
+  
   render() {
     return(
       <div className="event-tile__desktop">

@@ -1,8 +1,22 @@
 import React from "react";
 
-class MultiSelectList extends React.Component {
+export default class MultiSelectList extends React.Component {
   constructor(props){
     super(props);
+  }
+
+  isChecked = (type, value) => {
+    let isChecked = null;
+    if (this.props.selectedFilters[type]) {
+      if (this.props.selectedFilters[type].includes(value)) {
+        isChecked = true;
+      } else {
+        isChecked = false;
+      }
+    } else {
+      isChecked = false;
+    }
+    return isChecked;
   }
 
   render() {
@@ -16,19 +30,23 @@ class MultiSelectList extends React.Component {
             </div>
             :<span>3 selected</span>
           }
-          <button>Clear</button>
+          <button name="Clear" onClick={() => this.props.clearFilterType(this.props.filterType)}>Clear</button>
         </div>
         <ul>
           {this.props.data.map(i => {
             return(
               <li key={i}>
-                <span>{i}</span>
-                <input 
-                  type="checkbox" 
-                  name={this.props.filterType} 
-                  value={i}
-                  onChange={this.props.filterArrays}
-                /> 
+                <label htmlFor={i}>
+                  <input 
+                    id={i}
+                    type="checkbox" 
+                    name={this.props.filterType} 
+                    value={i}
+                    onChange={this.props.filterArrays}
+                    checked={this.isChecked(this.props.filterType, i)}
+                  /> 
+                  {i}
+                </label>
               </li>
             )
           })}
@@ -37,5 +55,3 @@ class MultiSelectList extends React.Component {
     )
   }
 };
-
-export default MultiSelectList;

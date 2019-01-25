@@ -2,7 +2,7 @@ import React from "react";
 import FilterMobile from "./filters-mobile.jsx";
 import FilterDesktop from "./filters-desktop.jsx";
 
-export default class eventFilterUI extends React.Component {
+export default class Filters extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -56,6 +56,8 @@ export default class eventFilterUI extends React.Component {
           <FilterDesktop 
             filters={this.props.filterTypes}
             filterArrays={this.props.filterArrays}
+            selectedFilters={this.props.selectedFilters}
+            clearFilterType={this.props.clearFilterType}
           />
         </React.Fragment>
     )}

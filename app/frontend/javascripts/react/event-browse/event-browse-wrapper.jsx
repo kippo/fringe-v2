@@ -2,8 +2,7 @@ import Axios from 'axios';
 import React from "react";
 import QueryString from "query-string";
 import EventList from "./event_list.jsx";
-import EventFilters from "../event_filters.jsx";
-import FilterWrapper from "../event-browse/filters/filters-wrapper.jsx";
+import Filters from "./filters/filters.jsx";
 
 export default class EventBrowse extends React.Component {  
   constructor(props) {
@@ -129,6 +128,12 @@ export default class EventBrowse extends React.Component {
     }
   }
 
+  clearFilterType = (filerType) => {
+    let filters = this.state.selectedFilters;
+    delete filters[filerType];
+    this.setFilters(filters);
+  }
+
   //Add or remove filter stored as arrays
   filterArrays = (e) => {
     let key = e.target.name;
@@ -138,31 +143,27 @@ export default class EventBrowse extends React.Component {
     // Initialize array if it doesn't exisit
     if (!filters[key]) filters[key] = [];
 
-    if (value != "All") {
-      // Check to see if filter value is already in array, if not add it
-      if (!filters[key].includes(value)) {
-        filters[key].push(value);
-      } else {
-      // Else remove it
-        let index = filters[key].indexOf(value);
-        if (index > -1) {
-          filters[key].splice(index, 1);
-        }
-      }
-
-      // If array is empty remove it
-      if (filters[key].length == 0) {
-        delete filters[key];
-      }
+    // Check to see if filter value is already in array, if not add it
+    if (!filters[key].includes(value)) {
+      filters[key].push(value);
     } else {
+    // Else remove it
+      let index = filters[key].indexOf(value);
+      if (index > -1) {
+        filters[key].splice(index, 1);
+      }
+    }
+
+    // If array is empty remove it
+    if (filters[key].length == 0) {
       delete filters[key];
     }
 
-    this.filterCallback(filters);
+    this.setFilters(filters);
   }
 
   //Set filter state when filter changes and call functions to get new events and set state in history API  
-  filterCallback = (filters) => {
+  setFilters = (filters) => {
     this.setState(
       {selectedFilters: filters},
       () => {
@@ -184,7 +185,7 @@ export default class EventBrowse extends React.Component {
       delete filters[key];
     }
 
-    this.props.filterCallback(filters);
+    this.props.setFilters(filters);
   }
 
   //Get initial events and set filter state if user moves through history
@@ -207,12 +208,13 @@ export default class EventBrowse extends React.Component {
   render() {
     return(
       <div className="event-browse">
-        <FilterWrapper
-          filterTypes={this.filterTypes}
-          filterArrays={this.filterArrays}
-        />
         <div className="event-browse--filter">
-          <EventFilters filterString={this.filterString} filterArrays={this.filterArrays} selectedFilters={this.state.selectedFilters} />
+          <Filters
+            filterTypes={this.filterTypes}
+            filterArrays={this.filterArrays}
+            selectedFilters={this.state.selectedFilters}
+            clearFilterType={this.clearFilterType}
+          />
         </div>
         <div className={"event-browse--results" + (this.state.dataLoaded ? "" : " event-browse--results__loading")}>
           <EventList eventData={this.state.eventData} />

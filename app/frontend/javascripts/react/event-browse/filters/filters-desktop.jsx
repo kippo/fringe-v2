@@ -20,16 +20,63 @@ export default class FilterDesktop extends React.Component {
   render() {
     return(
       <div className="filter-desktop">
-        <div>
+        <div className="spacing">
 
             <MultiSelectList 
               data={this.props.filters.genre}
               filterType={"genre"}
               isMobile={false} 
               filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
             />
 
-          
+            <MultiSelectList 
+              data={this.props.filters.rating}
+              filterType={"rating"}
+              isMobile={false} 
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+
+            <MultiSelectList 
+              data={this.props.filters.accessibility}
+              filterType={"accessibility"}
+              isMobile={false} 
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+
+            <MultiSelectList 
+              data={this.props.filters.priceType}
+              filterType={"priceType"}
+              isMobile={false} 
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+
+            <MultiSelectList 
+              data={this.props.filters.mood}
+              filterType={"mood"}
+              isMobile={false} 
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+
+            <MultiSelectList 
+              data={this.props.filters.program}
+              filterType={"program"}
+              isMobile={false} 
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+
+          {/*
           <DesktopFilterWrapper label="Dates">
             <DateSelect />
           </DesktopFilterWrapper>
@@ -38,40 +85,14 @@ export default class FilterDesktop extends React.Component {
             <VenueSearch data={this.props.filters.venue} />
           </DesktopFilterWrapper>
           
-          <DesktopFilterWrapper label="Accessibility">
-            <MultiSelectList data={this.props.filters.accessibility} isMobile={false} />
-          </DesktopFilterWrapper>
-          <div onClick={this.toggleMoreFilters}>More Filters</div>
-        </div>
-
-        <div className={`filter-desktop--more ${this.state.moreFiltersOpen ? "filter-desktop--more__open" : "filter-desktop--more__closed"}`}>
-          <DesktopFilterWrapper label="Accessibility">
-            <MultiSelectList data={this.props.filters.rating} filterName="Rating" isMobile={false} />
-          </DesktopFilterWrapper>
-          
           <DesktopFilterWrapper label="Time of day">
             <div>Time of day</div>
-          </DesktopFilterWrapper>
-          
-          <DesktopFilterWrapper label="Price type">
-            <MultiSelectList data={this.props.filters.priceType} isMobile={false} />
-          </DesktopFilterWrapper>
-
-          <DesktopFilterWrapper label="Accessibility">
-            <div>Price Range (Slider)</div>
-          </DesktopFilterWrapper>
-
-          <DesktopFilterWrapper label="Moods">
-            <MultiSelectList data={this.props.filters.mood} isMobile={false} />
-          </DesktopFilterWrapper>
-
-          <DesktopFilterWrapper label="Programs">
-            <MultiSelectList data={this.props.filters.program} isMobile={false} />
           </DesktopFilterWrapper>
           
           <div>Family Friendly (Single)</div>
           
           <div>Auslan Translation</div>
+          */}
         </div>
       </div>
     )
