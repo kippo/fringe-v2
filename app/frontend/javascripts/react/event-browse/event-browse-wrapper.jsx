@@ -140,7 +140,7 @@ export default class EventBrowse extends React.Component {
     Object.keys(this.state.selectedFilters).length !== 0 && (mergedState.selectedFilters = this.state.selectedFilters);
     this.state.sortOption !== "" && (mergedState.sortOption = this.state.sortOption);
 
-    // Only update url and history.state if state has something in it
+    // Only update url and history.state if mergedState has something in it
     if (Object.keys(mergedState).length != 0) {
       let requestString = this.createQueryString();
       if (type === 'push') {
@@ -261,8 +261,14 @@ export default class EventBrowse extends React.Component {
           />
         </div>
         <div className={"event-browse--results" + (this.state.dataLoaded ? "" : " event-browse--results__loading")}>
-          <EventList eventData={this.state.eventData} />
-          <Pagination totalResults={this.state.totalResults} currentPage={this.state.currentPage} itemsPerPage={this.state.itemsPerPage} />
+          <EventList 
+            eventData={this.state.eventData} 
+          />
+          <Pagination 
+            totalResults={this.state.totalResults} 
+            currentPage={this.state.currentPage} 
+            itemsPerPage={this.state.itemsPerPage} 
+          />
         </div>
       </div>
     )
