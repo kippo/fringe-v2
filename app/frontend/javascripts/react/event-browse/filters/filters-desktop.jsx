@@ -20,7 +20,7 @@ export default class FilterDesktop extends React.Component {
   render() {
     return(
       <div className="filter-desktop">
-        <div className="spacing">
+        <div className="spacing-x-tight">
 
             <MultiSelectList 
               data={this.props.filters.genre}

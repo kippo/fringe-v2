@@ -3,10 +3,32 @@ import React from "react";
 import QueryString from "query-string";
 import EventList from "./event_list.jsx";
 import Filters from "./filters/filters.jsx";
+import Pagination from "../pagination.jsx";
 
 export default class EventBrowse extends React.Component {  
   constructor(props) {
     super(props);
+    this.sortOptions = [
+      {
+        label: "Relevance",
+        string: "relevance"
+      },{
+        label: "Price (Low to high)",
+        string: "price-ascending"
+      },{
+        label: "Price (High to low)",
+        string: "price-descending"
+      },{
+        label: "Audience rating",
+        string: "audience-rating"
+      },{
+        label: "Name (A to Z)",
+        string: "name-a-z"
+      },{
+        label: "Name (Z to A)",
+        string: "name-z-a"
+      }
+    ]
     this.filterTypes = {
       genre: [
         "Comedy",
@@ -74,7 +96,11 @@ export default class EventBrowse extends React.Component {
     this.state = {
       eventData: [],
       selectedFilters: QueryString.parse(location.search, {arrayFormat: 'bracket'}),
-      dataLoaded: false
+      dataLoaded: false,
+      sortOption: "",
+      totalResults: null,
+      currentPage: 1,
+      itemsPerPage: 20
     }
     this._isMounted = false;
   }
@@ -95,6 +121,7 @@ export default class EventBrowse extends React.Component {
         if (this._isMounted) {
           this.setState({
             eventData: response.data,
+            totalResults: response.data[0].totalResults,
             dataLoaded: true
           });
         }
@@ -106,24 +133,26 @@ export default class EventBrowse extends React.Component {
     return QueryString.stringify(this.state.selectedFilters, {arrayFormat: 'bracket'});
   }
 
-  // Set url to match current filters state add them to histories state
+  // Set url to match current state add push intto history.state
   setHistory = (type) => {
-    let state = {
-      selectedFilters: this.state.selectedFilters
-    };
-    // Only update url if filter state has something in it
-    if (Object.keys(this.state.selectedFilters).length != 0) {
+    //Merge filter, sort and pagination state to be passed to history.state
+    let mergedState = {};
+    Object.keys(this.state.selectedFilters).length !== 0 && (mergedState.selectedFilters = this.state.selectedFilters);
+    this.state.sortOption !== "" && (mergedState.sortOption = this.state.sortOption);
+
+    // Only update url and history.state if state has something in it
+    if (Object.keys(mergedState).length != 0) {
       let requestString = this.createQueryString();
       if (type === 'push') {
-        history.pushState(state, '', '?' + requestString);
+        history.pushState(mergedState, '', '?' + requestString);
       } else {
-        history.replaceState(state, '', '?' + requestString);
+        history.replaceState(mergedState, '', '?' + requestString);
       }
     } else {
       if (type === 'push') {
-        history.pushState(state, '', window.location.pathname);
+        history.pushState(mergedState, '', window.location.pathname);
       } else {
-        history.replaceState(state, '', window.location.pathname);
+        history.replaceState(mergedState, '', window.location.pathname);
       }
     }
   }
@@ -173,6 +202,16 @@ export default class EventBrowse extends React.Component {
     );
   }
   
+  setSort = (e) => {
+    this.setState(
+      {sortOption: e.target.value},
+      () => {
+        this.setHistory('push');
+        this.getEvents();
+      }
+    );
+  }
+
   //Add or remove filter options stored as strings
   filterString = (e) => {
     let key = e.target.name;
@@ -209,6 +248,11 @@ export default class EventBrowse extends React.Component {
     return(
       <div className="event-browse">
         <div className="event-browse--filter">
+          <select value={this.state.sortOption} onChange={this.setSort}>
+            {this.sortOptions.map((sortOption) => {
+              return <option value={sortOption.string} key={sortOption.string}>{sortOption.label}</option>
+            })}
+          </select>
           <Filters
             filterTypes={this.filterTypes}
             filterArrays={this.filterArrays}
@@ -218,6 +262,7 @@ export default class EventBrowse extends React.Component {
         </div>
         <div className={"event-browse--results" + (this.state.dataLoaded ? "" : " event-browse--results__loading")}>
           <EventList eventData={this.state.eventData} />
+          <Pagination totalResults={this.state.totalResults} currentPage={this.state.currentPage} itemsPerPage={this.state.itemsPerPage} />
         </div>
       </div>
     )
