@@ -3,7 +3,7 @@ import React from "react";
 import QueryString from "query-string";
 import EventList from "./event_list.jsx";
 import Filters from "./filters/filters.jsx";
-import Pagination from "../pagination.jsx";
+import Pagination from "../pagination/pagination.jsx";
 
 export default class EventBrowse extends React.Component {  
   constructor(props) {
@@ -97,7 +97,6 @@ export default class EventBrowse extends React.Component {
       eventData: [],
       selectedFilters: QueryString.parse(location.search, {arrayFormat: 'bracket'}),
       dataLoaded: false,
-      sortOption: "",
       totalResults: null,
       currentPage: 1,
       itemsPerPage: 20
@@ -135,24 +134,22 @@ export default class EventBrowse extends React.Component {
 
   // Set url to match current state add push intto history.state
   setHistory = (type) => {
-    //Merge filter, sort and pagination state to be passed to history.state
-    let mergedState = {};
-    Object.keys(this.state.selectedFilters).length !== 0 && (mergedState.selectedFilters = this.state.selectedFilters);
-    this.state.sortOption !== "" && (mergedState.sortOption = this.state.sortOption);
-
-    // Only update url and history.state if mergedState has something in it
-    if (Object.keys(mergedState).length != 0) {
+    let state = {
+      selectedFilters: this.state.selectedFilters
+    };
+    // Only update url and history.state if selectedFilters has something in it
+    if (Object.keys(this.state.selectedFilters).length != 0) {
       let requestString = this.createQueryString();
       if (type === 'push') {
-        history.pushState(mergedState, '', '?' + requestString);
+        history.pushState(state, '', '?' + requestString);
       } else {
-        history.replaceState(mergedState, '', '?' + requestString);
+        history.replaceState(state, '', '?' + requestString);
       }
     } else {
       if (type === 'push') {
-        history.pushState(mergedState, '', window.location.pathname);
+        history.pushState(state, '', window.location.pathname);
       } else {
-        history.replaceState(mergedState, '', window.location.pathname);
+        history.replaceState(state, '', window.location.pathname);
       }
     }
   }
@@ -170,7 +167,7 @@ export default class EventBrowse extends React.Component {
     let filters = this.state.selectedFilters;
 
     // Initialize array if it doesn't exisit
-    if (!filters[key]) filters[key] = [];
+    !filters[key] && (filters[key] = []);
 
     // Check to see if filter value is already in array, if not add it
     if (!filters[key].includes(value)) {
@@ -178,13 +175,22 @@ export default class EventBrowse extends React.Component {
     } else {
     // Else remove it
       let index = filters[key].indexOf(value);
-      if (index > -1) {
-        filters[key].splice(index, 1);
-      }
+      index > -1 && filters[key].splice(index, 1);
     }
 
     // If array is empty remove it
-    if (filters[key].length == 0) {
+    filters[key].length == 0 && delete filters[key];
+
+    this.setFilters(filters);
+  }
+
+  //Add or remove filter options stored as strings
+  filterStrings = (e, key = e.target.name, value = e.target.value) => {
+    let filters = this.state.selectedFilters;
+
+    if (filters[key] !== value && value != this.allKeyword) {
+      filters[key] = value;
+    } else {
       delete filters[key];
     }
 
@@ -200,31 +206,6 @@ export default class EventBrowse extends React.Component {
         this.getEvents();
       }
     );
-  }
-  
-  setSort = (e) => {
-    this.setState(
-      {sortOption: e.target.value},
-      () => {
-        this.setHistory('push');
-        this.getEvents();
-      }
-    );
-  }
-
-  //Add or remove filter options stored as strings
-  filterString = (e) => {
-    let key = e.target.name;
-    let value = e.target.value;
-    let filters = this.props.selectedFilters;
-  
-    if (filters[key] !== value && value != this.allKeyword) {
-      filters[key] = value;
-    } else {
-      delete filters[key];
-    }
-
-    this.props.setFilters(filters);
   }
 
   //Get initial events and set filter state if user moves through history
@@ -248,7 +229,7 @@ export default class EventBrowse extends React.Component {
     return(
       <div className="event-browse">
         <div className="event-browse--filter">
-          <select value={this.state.sortOption} onChange={this.setSort}>
+          <select name="sort" value={this.state.selectedFilters.sort} onChange={this.filterStrings}>
             {this.sortOptions.map((sortOption) => {
               return <option value={sortOption.string} key={sortOption.string}>{sortOption.label}</option>
             })}
@@ -265,12 +246,17 @@ export default class EventBrowse extends React.Component {
             eventData={this.state.eventData} 
           />
           <Pagination 
-            totalResults={this.state.totalResults} 
-            currentPage={this.state.currentPage} 
-            itemsPerPage={this.state.itemsPerPage} 
+            totalResults={this.state.totalResults}
+            itemsPerPage={this.state.itemsPerPage}
+            filterStrings={this.filterStrings}
+            selectedFilters={this.state.selectedFilters}
+            clearFilterType={this.clearFilterType}
           />
         </div>
       </div>
     )
   }
 };
+
+
+// Pagination is toggling
