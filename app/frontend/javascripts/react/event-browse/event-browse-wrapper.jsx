@@ -8,6 +8,10 @@ import Pagination from "../pagination/pagination.jsx";
 export default class EventBrowse extends React.Component {  
   constructor(props) {
     super(props);
+    this.pageSize = [
+      20, 
+      100
+    ]
     this.sortOptions = [
       {
         label: "Relevance",
@@ -97,9 +101,7 @@ export default class EventBrowse extends React.Component {
       eventData: [],
       selectedFilters: QueryString.parse(location.search, {arrayFormat: 'bracket'}),
       dataLoaded: false,
-      totalResults: null,
-      currentPage: 1,
-      itemsPerPage: 20
+      totalResults: null
     }
     this._isMounted = false;
   }
@@ -120,7 +122,7 @@ export default class EventBrowse extends React.Component {
         if (this._isMounted) {
           this.setState({
             eventData: response.data,
-            totalResults: response.data[0].totalResults,
+            totalResults: 232,
             dataLoaded: true
           });
         }
@@ -208,11 +210,24 @@ export default class EventBrowse extends React.Component {
     );
   }
 
+  //Set default pagesize state as pagination relies on it
+  pageSizeInit = () => {
+    console.log(this.state.selectedFilters);
+    if (!("pagesize" in this.state.selectedFilters)) {
+      let state = this.state.selectedFilters;
+      state.pagesize = this.pageSize[0];
+      this.setState({
+        selectedFilters: state
+      })
+    }
+  }
+
   //Get initial events and set filter state if user moves through history
   componentDidMount() {
     this._isMounted = true;
     this.setHistory('replace');
     this.getEvents();
+    this.pageSizeInit();
     onpopstate = (e) => {
       this.setState(
         {selectedFilters: e.state.selectedFilters},
@@ -228,12 +243,19 @@ export default class EventBrowse extends React.Component {
   render() {
     return(
       <div className="event-browse">
-        <div className="event-browse--filter">
-          <select name="sort" value={this.state.selectedFilters.sort} onChange={this.filterStrings}>
-            {this.sortOptions.map((sortOption) => {
-              return <option value={sortOption.string} key={sortOption.string}>{sortOption.label}</option>
-            })}
-          </select>
+        <div className="event-browse--filter spacing-xx-loose">
+          <div>
+            <select name="pagesize" value={this.state.selectedFilters.pagesize} onChange={this.filterStrings}>
+              {this.pageSize.map((pageSize) => {
+                return <option value={pageSize} key={pageSize}>{pageSize}</option>
+              })}
+            </select>
+            <select name="sort" value={this.state.selectedFilters.sort} onChange={this.filterStrings}>
+              {this.sortOptions.map((sortOption) => {
+                return <option value={sortOption.string} key={sortOption.string}>{sortOption.label}</option>
+              })}
+            </select>
+          </div>
           <Filters
             filterTypes={this.filterTypes}
             filterArrays={this.filterArrays}
@@ -247,7 +269,6 @@ export default class EventBrowse extends React.Component {
           />
           <Pagination 
             totalResults={this.state.totalResults}
-            itemsPerPage={this.state.itemsPerPage}
             filterStrings={this.filterStrings}
             selectedFilters={this.state.selectedFilters}
             clearFilterType={this.clearFilterType}
@@ -258,5 +279,5 @@ export default class EventBrowse extends React.Component {
   }
 };
 
-
-// Pagination is toggling
+// Add clear all button
+// Clear all filters button would clear items per page and sort options as well as default items per page value which pagination relies on
