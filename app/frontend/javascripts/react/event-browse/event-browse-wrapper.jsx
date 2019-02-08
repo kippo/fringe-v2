@@ -279,5 +279,6 @@ export default class EventBrowse extends React.Component {
   }
 };
 
+
 // Add clear all button
 // Clear all filters button would clear items per page and sort options as well as default items per page value which pagination relies on
