@@ -54,6 +54,12 @@
 @import "components/tooltip";
 @import "components/tray-overlay";
 @import "components/tray-push";
+
+// =========================================================================
+// Project specific
+// =========================================================================
+
+@import "components/tns";
 @import "components/event-tile";
 @import "components/genre";
 @import "components/tile-scroller";
@@ -62,7 +68,8 @@
 @import "components/favourite";
 @import "components/filter-mobile";
 @import "components/filter-desktop";
-@import "components/tns";
+@import "components/session";
+
 
 // =========================================================================
 // Helpers

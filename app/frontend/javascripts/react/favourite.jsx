@@ -1,8 +1,9 @@
 import React from "react";
 
 export default class favourite extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.eventKey = this.props.evenData.key;
     this.state = {
       favorited: false,
     }
@@ -13,6 +14,7 @@ export default class favourite extends React.Component {
   }
 
   handleFavourite = () => {    
+    
     this.setState(
       {favorited: !this.state.favorited}
     );

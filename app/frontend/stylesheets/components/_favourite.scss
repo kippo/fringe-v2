@@ -9,6 +9,7 @@
     width: 16px;
     opacity: .5;
     display: block;
+    transition: opacity .25s;
   }
   &.favourite-button__favorited {
     svg {

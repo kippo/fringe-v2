@@ -1,0 +1,46 @@
+$session-breakpoint: 600px;
+
+.session--list {
+  & > li {
+    padding-top: $x-small-unit;
+    margin-top: $x-small-unit;
+    border-top: $divider;
+  }
+}
+
+.session {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  @include media-query($session-breakpoint, min) {
+    align-items: center;
+  }
+}
+
+.session--image {
+  position: relative;
+  flex-basis: 80px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  img {
+    display: block;
+  }
+  @include media-query($session-breakpoint, min) {
+    flex-basis: 120px;
+  }
+}
+
+.session--content {
+  flex-grow: 1;
+  padding: 0 $x-small-unit;
+}
+
+.session--action {
+  flex-basis: 140px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: none;
+  @include media-query($session-breakpoint, min) {
+    display: block;
+  }
+}
