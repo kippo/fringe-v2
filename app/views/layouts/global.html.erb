@@ -78,7 +78,7 @@
 
         <header class="header" role="banner">
           <div class="layout--container">
-            header
+            <%= react_component("FavouriteButton", props: {favCount: 3}) %>
             <button class="header--menu" aria-label="Toggle menu" data-tray-anchor>
               <%= icon("hamburger", fill: "#ffffff", width: 25, height: 23) -%>
             </button>

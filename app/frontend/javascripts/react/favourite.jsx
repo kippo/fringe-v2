@@ -12,7 +12,8 @@ export default class favourite extends React.Component {
     
   }
 
-  handleFavourite = () => {    
+  handleFavourite = () => {   
+    document.dispatchEvent(new CustomEvent("hello"));
     this.setState(
       {favorited: !this.state.favorited}
     );
@@ -20,7 +21,7 @@ export default class favourite extends React.Component {
 
   render() {
     return(
-      <button className={"favourite-button" + (this.state.favorited ? " favourite-button__favorited" : "")} onClick={this.handleFavourite} dangerouslySetInnerHTML={{__html: Ornicons.starWhite}}></button>
+      <button id="foox" className={"favourite-button" + (this.state.favorited ? " favourite-button__favorited" : "")} onClick={this.handleFavourite} dangerouslySetInnerHTML={{__html: Ornicons.starWhite}}></button>
     )
   }
 };
