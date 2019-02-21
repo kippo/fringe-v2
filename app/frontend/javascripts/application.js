@@ -58,7 +58,6 @@ import "./components/transition-toggle";
 import "./components/tray-push";
 import "./components/tray-overlay";
 import "./components/wysiwyg-helpers";
-import "./components/favourites";
 
 // =========================================================================
 // jQuery dependant components

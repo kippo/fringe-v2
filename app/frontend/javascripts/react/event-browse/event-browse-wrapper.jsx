@@ -212,7 +212,6 @@ export default class EventBrowse extends React.Component {
 
   //Set default pagesize state as pagination relies on it
   pageSizeInit = () => {
-    console.log(this.state.selectedFilters);
     if (!("pagesize" in this.state.selectedFilters)) {
       let state = this.state.selectedFilters;
       state.pagesize = this.pageSize[0];
@@ -220,6 +219,11 @@ export default class EventBrowse extends React.Component {
         selectedFilters: state
       })
     }
+  }
+
+  changePageSize = (e) => {
+    this.clearFilterType("page")
+    this.filterStrings(e);
   }
 
   //Get initial events and set filter state if user moves through history
@@ -239,13 +243,13 @@ export default class EventBrowse extends React.Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-
+  
   render() {
     return(
       <div className="event-browse">
         <div className="event-browse--filter spacing-xx-loose">
           <div>
-            <select name="pagesize" value={this.state.selectedFilters.pagesize} onChange={this.filterStrings}>
+            <select name="pagesize" value={this.state.selectedFilters.pagesize} onChange={this.changePageSize}>
               {this.pageSize.map((pageSize) => {
                 return <option value={pageSize} key={pageSize}>{pageSize}</option>
               })}
@@ -263,16 +267,18 @@ export default class EventBrowse extends React.Component {
             clearFilterType={this.clearFilterType}
           />
         </div>
-        <div className={"event-browse--results" + (this.state.dataLoaded ? "" : " event-browse--results__loading")}>
-          <EventList 
-            eventData={this.state.eventData} 
-          />
-          <Pagination 
-            totalResults={this.state.totalResults}
-            filterStrings={this.filterStrings}
-            selectedFilters={this.state.selectedFilters}
-            clearFilterType={this.clearFilterType}
-          />
+        <div className="event-browse--results">
+          <div className={!this.state.dataLoaded && "event-browse--results__loading"}>
+            <EventList 
+              eventData={this.state.eventData} 
+            />
+            <Pagination 
+              totalResults={this.state.totalResults}
+              filterStrings={this.filterStrings}
+              selectedFilters={this.state.selectedFilters}
+              clearFilterType={this.clearFilterType}
+            />
+          </div>
         </div>
       </div>
     )

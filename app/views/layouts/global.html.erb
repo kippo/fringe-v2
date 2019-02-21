@@ -78,8 +78,7 @@
 
         <header class="header" role="banner">
           <div class="layout--container">
-            <div>header</div> 
-            <div>Favourites <span data-favourites-header>0</span></div>
+            <%= react_component("FavouriteButton", props: {favCount: 3}) %>
             <button class="header--menu" aria-label="Toggle menu" data-tray-anchor>
               <%= icon("hamburger", fill: "#ffffff", width: 25, height: 23) -%>
             </button>
@@ -110,6 +109,11 @@
     </div>
 
     <%= yield :scripts_bottom %>
+
+    <script>
+      let customerSignedIn = false;
+      let customerFavourites = [2,3,5];
+    </script>
     
     <%= render "layouts/analytics" -%>
 
