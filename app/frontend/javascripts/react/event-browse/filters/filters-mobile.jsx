@@ -1,8 +1,6 @@
 import React from "react";
 import MultiSelectList from "./filter-controls/multi_select_list.jsx";
-import DateSelect from "./filter-controls/date_select.jsx";
 import VenueSearch from "./filter-controls/venue_search.jsx";
-import SelectMenu from "./filter-controls/select_menu.jsx";
 
 export default class FilterMobile extends React.Component {
   constructor(props){
@@ -33,81 +31,6 @@ export default class FilterMobile extends React.Component {
   }
 
   render() {
-    // Conditionally set which type of filter to render based on state.activeFilterType. Possibly create a conditioanl for each rather than relying on props.
-    let filterComponent;
-    
-    if (this.state.activeFilter === 'genre') {
-      filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.genre}
-          filterName="Genres"
-          isMobile={true}
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'date') {
-      filterComponent = 
-        <DateSelect 
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'time') {
-      filterComponent = 
-        <SelectMenu 
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'venue') {
-      filterComponent = 
-        <VenueSearch 
-          data={this.props.filters.venue}
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'accessibility') {
-      filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.accessibility}
-          filterName="Accessibility"
-          isMobile={true}
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'rating') {
-      filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.rating}
-          filterName="Rating"
-          isMobile={true}
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'price-type') {
-      filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.priceType}
-          filterName="Price Type"
-          isMobile={true}
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'price-range') {
-      filterComponent = 
-        <SelectMenu
-          data={this.props.filters.priceRange}
-          backCallback={this.backCallback}
-        />;
-    } else if (this.state.activeFilter === 'mood') {
-      filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.mood}
-          filterName="Moods"
-          isMobile={true}
-          backCallback={this.backCallback}
-        />;
-    }  else if (this.state.activeFilter === 'program') {
-      filterComponent = 
-        <MultiSelectList 
-          data={this.props.filters.program}
-          filterName="Moods"
-          isMobile={true}
-          backCallback={this.backCallback}
-        />;
-    } 
-    
     return(
       <div className={`
         filter-mobile

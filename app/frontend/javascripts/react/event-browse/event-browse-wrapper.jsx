@@ -39,7 +39,7 @@ export default class EventBrowse extends React.Component {
         "Drama",
         "Circus",
         "Cabaret"
-      ], venue: [
+      ], venues: [
         "Garden of Unearthly Delights",
         "Gluttony",
         "Black Cat"
@@ -66,12 +66,12 @@ export default class EventBrowse extends React.Component {
         "FREE",
         "Passholder Free",
         "Passholder Discount"
-      ], rating: [
+      ], suitability: [
         "G",
         "PG",
         "M",
         "R18+"
-      ], mood: [
+      ], moods: [
         "Party",
         "Unwind",
         "Be Moved",
@@ -81,20 +81,12 @@ export default class EventBrowse extends React.Component {
         "Laugh Until I Cry",
         "Experience the Extreme",
         "Experience Something Left of Centre"
-      ], program: [
+      ], programs: [
         "Honey Pot",
         "YEP!",
         "Science of the Fringe",
         "Sick of the Fringe",
         "Social Change"
-      ], priceRange: [
-        {
-          label: "Price (max)",
-          data: [5,10,15,20,30,40,50]
-        },{
-          label: "Price (min)",
-          data: [5,10,15,20,30,40,50]
-        }
       ]
     }
     this.state = {
@@ -246,41 +238,44 @@ export default class EventBrowse extends React.Component {
   
   render() {
     return(
-      <div className="event-browse">
-        <div className="event-browse--filter spacing-xx-loose">
-          <div>
-            <select name="pagesize" value={this.state.selectedFilters.pagesize} onChange={this.changePageSize}>
-              {this.pageSize.map((pageSize) => {
-                return <option value={pageSize} key={pageSize}>{pageSize}</option>
-              })}
-            </select>
-            <select name="sort" value={this.state.selectedFilters.sort} onChange={this.filterStrings}>
-              {this.sortOptions.map((sortOption) => {
-                return <option value={sortOption.string} key={sortOption.string}>{sortOption.label}</option>
-              })}
-            </select>
-          </div>
-          <Filters
-            filterTypes={this.filterTypes}
-            filterArrays={this.filterArrays}
-            selectedFilters={this.state.selectedFilters}
-            clearFilterType={this.clearFilterType}
-          />
+      <React.Fragment>
+        <div>
+          <select name="pagesize" value={this.state.selectedFilters.pagesize} onChange={this.changePageSize}>
+            {this.pageSize.map((pageSize) => {
+              return <option value={pageSize} key={pageSize}>{pageSize}</option>
+            })}
+          </select>
+          <select name="sort" value={this.state.selectedFilters.sort} onChange={this.filterStrings}>
+            {this.sortOptions.map((sortOption) => {
+              return <option value={sortOption.string} key={sortOption.string}>{sortOption.label}</option>
+            })}
+          </select>
         </div>
-        <div className="event-browse--results">
-          <div className={!this.state.dataLoaded && "event-browse--results__loading"}>
-            <EventList 
-              eventData={this.state.eventData} 
-            />
-            <Pagination 
-              totalResults={this.state.totalResults}
-              filterStrings={this.filterStrings}
+
+        <div className="event-browse">
+          <div className="event-browse--filter spacing-xx-loose">
+            <Filters
+              filterTypes={this.filterTypes}
+              filterArrays={this.filterArrays}
               selectedFilters={this.state.selectedFilters}
               clearFilterType={this.clearFilterType}
             />
           </div>
+          <div className="event-browse--results">
+            <div className={this.state.dataLoaded ? "" : "event-browse--results__loading"}>
+              <EventList 
+                eventData={this.state.eventData} 
+              />
+              <Pagination 
+                totalResults={this.state.totalResults}
+                filterStrings={this.filterStrings}
+                selectedFilters={this.state.selectedFilters}
+                clearFilterType={this.clearFilterType}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 };
@@ -288,3 +283,5 @@ export default class EventBrowse extends React.Component {
 
 // Add clear all button
 // Clear all filters button would clear items per page and sort options as well as default items per page value which pagination relies on
+// Change page size is calling set filters twice
+// Selecting multiplie filters quickly ques requests rather than stopping and starting requests

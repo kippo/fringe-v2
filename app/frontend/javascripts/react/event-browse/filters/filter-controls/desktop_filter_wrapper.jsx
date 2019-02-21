@@ -1,4 +1,5 @@
 import React from "react";
+import Modal from 'react-modal';
 
 export default class DesktopFilterWrapper extends React.Component {
   constructor(props){
@@ -8,19 +9,31 @@ export default class DesktopFilterWrapper extends React.Component {
     }
   }
 
-  toggleFilter = () => {
-    let toggle = !this.state.filterOpen;
-    this.setState({filterOpen: toggle});
+  handleFilter = () => {
+    this.setState(
+      {filterOpen: !this.state.filterOpen}
+    );
+  }
+
+  componentWillMount() {
+    // https://stackoverflow.com/questions/48269381/warning-react-modal-app-element-is-not-defined-please-use-modal-setappeleme?rq=1
+    Modal.setAppElement('body');
   }
 
   render() {
     return(
-      <div>
-        <div onClick={this.toggleFilter}>{this.props.label}</div>
-        <div className={`filter-desktop--dropdown ${this.state.filterOpen ? "filter-desktop--dropdown__open" : "filter-desktop--dropdown__closed"}`}>
-          {this.props.children}
+      <React.Fragment>
+        <div className="filters-desktop--filter-wrapper">
+          <label>{this.props.label}</label>
+          <div onClick={this.handleFilter}>{this.props.placeholder}</div>
         </div>
-      </div>
+        <Modal 
+          isOpen={this.state.filterOpen}
+          onRequestClose={this.handleFilter}
+        >
+          {this.props.children}
+        </Modal>
+      </React.Fragment>
     )
   }
 };
