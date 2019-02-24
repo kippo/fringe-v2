@@ -104,42 +104,43 @@ export default class FilterDesktop extends React.Component {
 
   returnActiveFilter = () => {
     if (this.state.activeFilter) {
-      if (this.state.activeFilter.type === "multiSelect") {
-        return (
-          <MultiSelectList 
-            data={this.props.filters[this.state.activeFilter.dataKey]}
-            filterType={this.state.activeFilter.name}
-            filterArrays={this.props.filterArrays}
-            selectedFilters={this.props.selectedFilters}
-            clearFilterType={this.props.clearFilterType}
-          />
-        )
-      } else if (this.state.activeFilter.type === "priceRange") {
-        return (
-          <PriceRange 
-            filterType={this.state.activeFilter.name}
-            selectedFilters={this.props.selectedFilters}
-            clearFilterType={this.props.clearFilterType}
-          />
-        )
-      } else if (this.state.activeFilter.type === "dateRange") {
-        return (
-          <DateRange 
-            filterType={this.state.activeFilter.name}
-            selectedFilters={this.props.selectedFilters}
-            clearFilterType={this.props.clearFilterType}
-          />
-        )
-      } else if (this.state.activeFilter.type === "venueSearch") {
-        return (
-          <VenueSearch 
-            data={this.props.filters[this.state.activeFilter.dataKey]}
-            filterType={this.state.activeFilter.name}
-            filterArrays={this.props.filterArrays}
-            selectedFilters={this.props.selectedFilters}
-            clearFilterType={this.props.clearFilterType}
-          />
-        )
+      switch (this.state.activeFilter.type) {
+        case "multiSelect":
+          return (
+            <MultiSelectList 
+              data={this.props.filters[this.state.activeFilter.dataKey]}
+              filterType={this.state.activeFilter.name}
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+          )
+        case "priceRange":
+          return (
+            <PriceRange 
+              filterType={this.state.activeFilter.name}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+          )
+        case "dateRange":
+          return (
+            <DateRange 
+              filterType={this.state.activeFilter.name}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+          )
+        case "venueSearch":
+          return (
+            <VenueSearch 
+              data={this.props.filters[this.state.activeFilter.dataKey]}
+              filterType={this.state.activeFilter.name}
+              filterArrays={this.props.filterArrays}
+              selectedFilters={this.props.selectedFilters}
+              clearFilterType={this.props.clearFilterType}
+            />
+          )
       }
     }
   }
