@@ -6,14 +6,8 @@ export default class Filters extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      mobileFilterOpen: false,
       isMobile: null
     }
-  }
-
-  toggleMobileFilter = () => {
-    let toggle = !this.state.mobileFilterOpen;
-    this.setState({mobileFilterOpen:toggle});
   }
 
   // Conditional display of filters (Should make this reusable for other features)
@@ -43,12 +37,16 @@ export default class Filters extends React.Component {
     if(this.state.isMobile) {
       return(
         <React.Fragment>
-        <button onClick={this.toggleMobileFilter}>Open filter</button>
-        <FilterMobile 
-          filters={this.props.filterTypes}
-          mobileFilterOpen={this.state.mobileFilterOpen}
-          mobileFilterCallback={this.toggleMobileFilter} 
-        />
+          <FilterMobile
+            filters={this.props.filterTypes}
+            filterArrays={this.props.filterArrays}
+            selectedFilters={this.props.selectedFilters}
+            clearFilterType={this.props.clearFilterType}
+            setActiveFilter={this.props.setActiveFilter}
+            returnActiveFilter={this.props.returnActiveFilter}
+            totalResults={this.props.totalResults}
+            activeFilter={this.props.activeFilter}
+          />
       </React.Fragment>
     )} else {
       return(
@@ -58,6 +56,8 @@ export default class Filters extends React.Component {
             filterArrays={this.props.filterArrays}
             selectedFilters={this.props.selectedFilters}
             clearFilterType={this.props.clearFilterType}
+            setActiveFilter={this.props.setActiveFilter}
+            returnActiveFilter={this.props.returnActiveFilter}
           />
         </React.Fragment>
     )}

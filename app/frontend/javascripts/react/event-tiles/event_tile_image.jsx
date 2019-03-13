@@ -2,19 +2,23 @@ import React from "react";
 import TinySlider from "tiny-slider-react";
 import Favourite from "../favourite.jsx";
 
-export default class EventTileFullDesktop extends React.Component {
+export default class EventTileImage extends React.Component {
   constructor(props){
     super(props);
     this.sliderSettings = {
 
     }
-    this.images = [];
+    this.state = {
+      images: []
+    }
   }
 
   componentDidMount() {
+    let images = [];
     for (let i = 0; i < this.props.eventData.imageCount; i++) {
-      this.images.push("https://source.unsplash.com/random/300x300?sig=" + Math.random().toString().replace('0.', ''));
+      images.push("https://source.unsplash.com/random/375x375?sig=" + Math.random().toString().replace('0.', ''));
     }
+    this.setState({images: images});
   }
 
   render() {
@@ -23,7 +27,7 @@ export default class EventTileFullDesktop extends React.Component {
         <Favourite {...this.props} />
         <div>
           <TinySlider settings={this.sliderSettings}>
-            {this.images.map((image, index) =>
+            {this.state.images.map((image, index) =>
               <div key={index}>
                 <img src={image} />
               </div>

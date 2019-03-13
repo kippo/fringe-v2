@@ -1,62 +1,88 @@
 import React from "react";
-import MultiSelectList from "./filter-controls/multi_select_list.jsx";
-import VenueSearch from "./filter-controls/venue_search.jsx";
 
 export default class FilterMobile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      activeFilter: null,
-      filterOpen: false
+      filterOpen: false,
+      paneOpen: false
     }
   }
 
-  // Set which filter filter group is active and open filter detail pane
-  filterSelect = (activeFilter) => {
-    this.setState({
-      activeFilter: activeFilter,
-      filterOpen: true,
-    });
+  fallbackText = (filter) => {
+    if (this.props.selectedFilters[filter]) {
+      return this.props.selectedFilters[filter].join(", ");
+    } else {
+      return this.props.filters[filter].placeholder;
+    }
   }
 
-  closeFilterDrawer = () => {
-    this.setState({filterOpen:false});
-    this.props.mobileFilterCallback();
+  handlePaneOpen = (filter) => {
+    this.props.setActiveFilter(filter);
+    this.setState(
+      {paneOpen: true}
+    );
   }
 
-  backCallback = () => {
-    this.setState({
-      filterOpen: false
-    });
+  handlePaneClose = () => {
+    this.setState(
+      {paneOpen: false}
+    );
+  }
+
+  toggleFilter = () => {
+    this.setState(
+      {filterOpen: !this.state.filterOpen},
+      () => !this.state.filterOpen && setTimeout(this.handlePaneClose, 200) // Needs to match up with CSS
+    );
   }
 
   render() {
     return(
-      <div className={`
-        filter-mobile
-        ${this.state.filterOpen ? "filter-mobile__active" : "filter-mobile__inactive"}
-        ${this.props.mobileFilterOpen ? "filter-mobile__open" : "filter-mobile__closed"}`
-      }>
-        <button className="filter-mobile--close" onClick={this.closeFilterDrawer}>Close</button>
-        <div className="filter-mobile--primary-list">
-          <ul>
-            <li onClick={() => this.filterSelect("genre")}>Genres</li>
-            <li onClick={() => this.filterSelect("date")}>Dates</li>
-            <li onClick={() => this.filterSelect("time")}>Time of Day</li>
-            <li onClick={() => this.filterSelect("venue")}>Venue</li>
-            <li onClick={() => this.filterSelect("accessibility")}>Accessibility</li>
-            <li onClick={() => this.filterSelect("rating")}>Rating</li>
-            <li onClick={() => this.filterSelect("price-type")}>Price Type</li>
-            <li onClick={() => this.filterSelect("price-range")}>Price Range</li>
-            <li onClick={() => this.filterSelect("mood")}>Moods</li>
-            <li onClick={() => this.filterSelect("program")}>Programs</li>
-            <li>Family Friendly</li>
-          </ul>
+      <React.Fragment>
+        <button className="filter-mobile--button" onClick={this.toggleFilter}>F</button>
+        <div className={`filter-mobile ${this.state.filterOpen && "filter-mobile__open"}`}>
+          <div className="filter-mobile--panes-wrapper">
+            <div className={`filter-mobile--panes ${this.state.paneOpen ? "filter-mobile--panes__open" : ""}`}>
+              <div className="filter-mobile--pane filter-mobile--pane-list">
+                <div className="filter-mobile--header">
+                  <button onClick={this.toggleFilter}>Close</button>
+                  <div>Search events</div>
+                  <button onClick={this.toggleFilter}>Clear all</button>
+                </div>
+                <ul className="filter-mobile--content filter-mobile--list">
+                  {Object.keys(this.props.filters).map((key) => {
+                    return (
+                      <li key={key} className="filter-mobile--list-item" data-filter-name={key} onClick={() => this.handlePaneOpen(key)}>
+                        <div className="filter-mobile--list-item--content">
+                          <div className="filter-mobile--list-item--label">
+                            <strong>{this.props.filters[key].label}</strong>
+                          </div>
+                          <div className="filter-mobile--list-item--selection">
+                            {this.fallbackText(key)}
+                          </div>
+                        </div>
+                        <div className="filter-mobile--list-item--icon" dangerouslySetInnerHTML={{__html: Ornicons.chevronRight}}></div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <div className="filter-mobile--pane filter-mobile--pane-detail">
+                <div className="filter-mobile--header">
+                  <button onClick={this.handlePaneClose}>Back</button>
+                  <strong>{this.props.activeFilter ? this.props.filters[this.props.activeFilter].label : "No active filter"}</strong>
+                  <button onClick={() => this.props.clearFilterType(this.props.activeFilter)}>Clear</button>
+                </div>
+                {this.props.returnActiveFilter()}
+              </div>
+            </div>
+          </div>
+          <div>
+            <button className="button button__full" onClick={this.toggleFilter}>Show {this.props.totalResults} events</button>
+          </div>
         </div>
-        <div className="filter-mobile--secondary-list">
-          {filterComponent ? filterComponent : ""}
-        </div>
-      </div>
+      </React.Fragment>
     )
   }
 };

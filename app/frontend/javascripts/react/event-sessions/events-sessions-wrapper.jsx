@@ -1,6 +1,5 @@
 import Axios from 'axios';
 import React from "react";
-import Favourite from "../favourite.jsx";
 
 export default class EventSessionsWrapper extends React.Component {
   constructor(props){
@@ -55,7 +54,6 @@ export default class EventSessionsWrapper extends React.Component {
         {this.state.eventData.map((data) =>
           <li key={data.key} className="session">
             <div className="session--image">
-              <Favourite />
               <img src="https://source.unsplash.com/random/200x200" />
             </div>
             <div className="session--content">

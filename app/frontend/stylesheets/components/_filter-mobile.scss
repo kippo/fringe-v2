@@ -2,37 +2,116 @@
   position: fixed;
   width: calc(100vw - 52px);
   max-width: 400px;
-  background: red;
-  overflow: visible;
+  background: $white;
   right: 0;
   top: 0;
   bottom: 0;
   display: flex;
-}
-
-.filter-mobile--primary-list {
-  margin-left: 0%;
-  transition: margin-left .25s;
-  .filter-mobile__active & {
-    margin-left: -100%;
+  flex-direction: column;
+  z-index: 20;
+  transform: translateX(100%);
+  transition: transform .2s;
+  &.filter-mobile__open {
+    transform: translateX(0%);
   }
 }
 
-.filter-mobile--primary-list, .filter-mobile--secondary-list {
-  flex-basis: 100%;
+.filter-mobile--list-item {
+  padding: $xxxx-small-unit $xx-small-unit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & + .filter-mobile--list-item {
+    border-top: $divider;
+  }
+}
+
+.filter-mobile--list-item--content {
+  min-width: 0;
+  padding-right: $xxxx-small-unit;
+}
+
+
+.filter-mobile--list-item--icon {
+  svg {
+    display: block;
+    width: $xxx-small-unit;
+    height: $xxx-small-unit;
+  }
+}
+
+.filter-mobile--list-item--label {
+  margin-bottom: $xxxxxx-small-unit;
+}
+
+.filter-mobile--list-item--selection {
+  @include small-type;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @include type-color($grey);
+}
+
+.filter-mobile--panes-wrapper {
+  overflow: hidden;
+  position: relative;
+  flex: 1;
+}
+
+.filter-mobile--panes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  width: 200%;
+  transition: transform .2s;
+  &.filter-mobile--panes__open {
+    transform: translateX(-50%);
+  }
+}
+
+.filter-mobile--pane-list {
+  flex: 1 0 50%;
+  min-width: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.filter-mobile--pane-detail {
+  flex: 1 0 50%;
+}
+
+.filter-mobile--pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-mobile--header {
+  border-bottom: $divider;
+  padding: $xx-small-unit $xx-small-unit;
+  display: flex;
+  justify-content: space-between;
   flex-shrink: 0;
 }
 
-.filter-mobile__open {
+.filter-mobile--header {
+  flex-shrink: 0;
+}
+
+.filter-mobile--button {
+  background: $primary-color;
+  border-radius: 50%;
+  height: $xxxx-large-unit;
+  width: $xxxx-large-unit;
+  position: fixed;
+  bottom: 44px;
+  right: $container-padding-mobile;
+  box-shadow: 0 0 50px 0 rgba(0,0,0,0.25);
   display: flex;
-}
-
-.filter-mobile__closed {
-  display: none;
-}
-
-.filter-mobile--close {
-  position: absolute;
-  top: 0;
-  right: 100%;
+  align-items: center;
+  justify-content: center;
+  @include color-link($white, $white);
+  @include decorate-link(none, none);
+  z-index: 20;
 }

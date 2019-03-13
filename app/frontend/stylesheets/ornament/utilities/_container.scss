@@ -13,7 +13,7 @@
 }
 
 @mixin container($max-width:$container-width, $padding:$container-padding, $mobile-padding:$container-padding-mobile) {
-  @include container-shared($max-width - ($padding * 2));
+  @include container-shared($max-width);
   padding-left: $padding;
   padding-right: $padding;
 

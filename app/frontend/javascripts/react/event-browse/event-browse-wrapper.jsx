@@ -4,12 +4,17 @@ import QueryString from "query-string";
 import EventList from "./event_list.jsx";
 import Filters from "./filters/filters.jsx";
 import Pagination from "../pagination/pagination.jsx";
+import MultiSelectList from "./filters/filter-controls/multi_select_list.jsx";
+import PriceRange from "./filters/filter-controls/price_range.jsx";
+import DateRange from "./filters/filter-controls/date_range.jsx";
+import VenueSearch from "./filters/filter-controls/venue_search.jsx";
+import EventBrowseContent from "./event-browse-context.jsx";
 
 export default class EventBrowse extends React.Component {  
   constructor(props) {
     super(props);
     this.pageSize = [
-      20, 
+      24, 
       100
     ]
     this.sortOptions = [
@@ -34,66 +39,122 @@ export default class EventBrowse extends React.Component {
       }
     ]
     this.filterTypes = {
-      genre: [
-        "Comedy",
-        "Drama",
-        "Circus",
-        "Cabaret"
-      ], venues: [
-        "Garden of Unearthly Delights",
-        "Gluttony",
-        "Black Cat"
-      ], accessibility: [
-        "Wheelchair Access", 
-        "Accessible Parking", 
-        "Wheelchair Accessible Toilet",
-        "Audio Description",
-        "Auslan Interpretation",
-        "Open Captioning",
-        "Relaxed Performance",
-        "Tactile Tours",
-        "Hearing Loop",
-        "Language No Barrier"
-      ], priceType: [
-        "BankSA Customer",
-        "BankSA Support Acts",
-        "Fringe Member",
-        "Concession",
-        "Family",
-        "Group 6+",
-        "Cheap Tuesday",
-        "Preview",
-        "FREE",
-        "Passholder Free",
-        "Passholder Discount"
-      ], suitability: [
-        "G",
-        "PG",
-        "M",
-        "R18+"
-      ], moods: [
-        "Party",
-        "Unwind",
-        "Be Moved",
-        "Be Amazed",
-        "Be Challenged",
-        "Be Entertained",
-        "Laugh Until I Cry",
-        "Experience the Extreme",
-        "Experience Something Left of Centre"
-      ], programs: [
-        "Honey Pot",
-        "YEP!",
-        "Science of the Fringe",
-        "Sick of the Fringe",
-        "Social Change"
-      ]
+      genres: {
+        placeholder: "All genres",
+        label: "Genres",
+        type: "multi-select",
+        hierarchy: "primary",
+        data: [
+          "Comedy",
+          "Drama",
+          "Circus",
+          "Cabaret"
+        ]
+      }, 
+      dateRange : {
+        label: "Dates",
+        placeholder: "All dates",
+        type: "date-range",
+        hierarchy: "primary",
+      }, 
+      venues: {
+        label: "Venues",
+        placeholder: "All venues",
+        type: "venue-search",
+        hierarchy: "primary",
+        data: [
+          "Garden of Unearthly Delights",
+          "Gluttony",
+          "Black Cat"
+        ]
+      }, 
+      accessibility: {
+        label: "Accessibility",
+        placeholder: "All accessibility options",
+        type: "multi-select",
+        hierarchy: "primary",
+        data: [
+          "Wheelchair Access", 
+          "Accessible Parking", 
+          "Wheelchair Accessible Toilet",
+          "Audio Description",
+          "Auslan Interpretation",
+          "Open Captioning",
+          "Relaxed Performance",
+          "Tactile Tours",
+          "Hearing Loop",
+          "Language No Barrier"
+        ]
+      }, 
+      priceType: {
+        label: "Price Type",
+        placeholder: "All price types",
+        type: "multi-select",
+        data: [
+          "BankSA Customer",
+          "BankSA Support Acts",
+          "Fringe Member",
+          "Concession",
+          "Family",
+          "Group 6+",
+          "Cheap Tuesday",
+          "Preview",
+          "FREE",
+          "Passholder Free",
+          "Passholder Discount"
+        ]
+      }, 
+      priceRange : {
+        label: "Price Range",
+        placeholder: "All price ranges",
+        type: "price-range"
+      }, 
+      suitability: {
+        label: "Suitability",
+        placeholder: "Suitable for everyone",
+        type: "multi-select",
+        data: [
+          "G",
+          "PG",
+          "M",
+          "R18+"
+        ]
+      }, 
+      moods: {
+        label: "Moods",
+        placeholder: "All moods",
+        type: "multi-select",
+        data: [
+          "Party",
+          "Unwind",
+          "Be Moved",
+          "Be Amazed",
+          "Be Challenged",
+          "Be Entertained",
+          "Laugh Until I Cry",
+          "Experience the Extreme",
+          "Experience Something Left of Centre"
+        ]
+      }, 
+      programs: {
+        label: "Programs",
+        placeholder: "All programs",
+        type: "multi-select",
+        data: [
+          "Honey Pot",
+          "YEP!",
+          "Science of the Fringe",
+          "Sick of the Fringe",
+          "Social Change"
+        ]
+      }
     }
     this.state = {
       eventData: [],
       selectedFilters: QueryString.parse(location.search, {arrayFormat: 'bracket'}),
       dataLoaded: false,
-      totalResults: null
+      totalResults: null,
+      activeFilter: null
     }
     this._isMounted = false;
   }
@@ -107,18 +168,22 @@ export default class EventBrowse extends React.Component {
       .get('https://my.api.mockaroo.com/fringe.json?key=482c6d90', {
         params: this.state.selectedFilters
       })
-      .catch((error) => {
-        console.log(error.response);
-      })
       .then((response) => {
         if (this._isMounted) {
           this.setState({
             eventData: response.data,
-            totalResults: 232,
-            dataLoaded: true
+            totalResults: 232
           });
         }
       })
+      .catch((error) => {
+        console.log(error.response);
+      })
+      .then(() => {
+        this.setState({
+          dataLoaded: true
+        });
+      }) 
   }
 
   // Create a query string based of selected filters state
@@ -154,10 +219,25 @@ export default class EventBrowse extends React.Component {
     this.setFilters(filters);
   }
 
-  //Add or remove filter stored as arrays
+  /// Loosing this here somehow???????????????
+  clearAllFilters = () => {
+    let filters = Object.keys(this.filterTypes);
+    debugger
+    let selectedFilters = this.state.selectedFilters;
+    for (let i; i < filters.length; i++) {
+      delete selectedFilters[i];
+    }
+    this.setFilters(selectedFilters);
+  }
+
+  /* ----------------------- Set active filter state ----------------------- */
+
+  //Add or remove active filters stored as arrays
   filterArrays = (e) => {
     let key = e.target.name;
     let value = e.target.value;
+    
+    // Take a copy of our selectedFilters object
     let filters = this.state.selectedFilters;
 
     // Initialize array if it doesn't exisit
@@ -172,9 +252,10 @@ export default class EventBrowse extends React.Component {
       index > -1 && filters[key].splice(index, 1);
     }
 
-    // If array is empty remove it
+    // If this filter no longer has any selections then remove it
     filters[key].length == 0 && delete filters[key];
 
+    // Add our modified copy of the selectedFilters object back into state
     this.setFilters(filters);
   }
 
@@ -202,6 +283,8 @@ export default class EventBrowse extends React.Component {
     );
   }
 
+  /* ----------------------- Page size ----------------------- */
+
   //Set default pagesize state as pagination relies on it
   pageSizeInit = () => {
     if (!("pagesize" in this.state.selectedFilters)) {
@@ -216,6 +299,62 @@ export default class EventBrowse extends React.Component {
   changePageSize = (e) => {
     this.clearFilterType("page")
     this.filterStrings(e);
+  }
+
+  /* ----------------------- Conditional filter component rendering ----------------------- */
+
+  //Toggle which filter is current open
+  setActiveFilter = (activeFilter) => {
+    this.setState({
+      activeFilter: activeFilter
+    })
+  }
+
+  //Render the appropriate filter component based on the active filter
+  returnActiveFilter = () => {
+    //Get filter object
+    let filterObj = this.filterTypes[this.state.activeFilter];
+
+    if (this.state.activeFilter) {
+      switch (filterObj.type) {
+        case "multi-select":
+          return (
+            <MultiSelectList 
+              data={filterObj.data}
+              filterType={this.state.activeFilter}
+              filterArrays={this.filterArrays}
+              selectedFilters={this.state.selectedFilters}
+              clearFilterType={this.clearFilterType}
+            />
+          )
+        case "price-range":
+          return (
+            <PriceRange 
+              filterType={this.state.activeFilter}
+              selectedFilters={this.state.selectedFilters}
+              clearFilterType={this.clearFilterType}
+            />
+          )
+        case "date-range":
+          return (
+            <DateRange 
+              filterType={this.state.activeFilter}
+              selectedFilters={this.state.selectedFilters}
+              clearFilterType={this.clearFilterType}
+            />
+          )
+        case "venue-search":
+          return (
+            <VenueSearch 
+              data={filterObj.data}
+              filterType={this.state.activeFilter}
+              filterArrays={this.filterArrays}
+              selectedFilters={this.state.selectedFilters}
+              clearFilterType={this.clearFilterType}
+            />
+          )
+      }
+    }
   }
 
   //Get initial events and set filter state if user moves through history
@@ -238,7 +377,8 @@ export default class EventBrowse extends React.Component {
   
   render() {
     return(
-      <React.Fragment>
+      <div className="layout--container">
+        <button onClick={this.clearAllFilters}>Clear All</button>
         <div>
           <select name="pagesize" value={this.state.selectedFilters.pagesize} onChange={this.changePageSize}>
             {this.pageSize.map((pageSize) => {
@@ -253,12 +393,16 @@ export default class EventBrowse extends React.Component {
         </div>
 
         <div className="event-browse">
-          <div className="event-browse--filter spacing-xx-loose">
+          <div className="event-browse--filter">
             <Filters
               filterTypes={this.filterTypes}
               filterArrays={this.filterArrays}
               selectedFilters={this.state.selectedFilters}
               clearFilterType={this.clearFilterType}
+              setActiveFilter={this.setActiveFilter}
+              returnActiveFilter={this.returnActiveFilter}
+              totalResults={this.state.totalResults}
+              activeFilter={this.state.activeFilter}
             />
           </div>
           <div className="event-browse--results">
@@ -271,11 +415,12 @@ export default class EventBrowse extends React.Component {
                 filterStrings={this.filterStrings}
                 selectedFilters={this.state.selectedFilters}
                 clearFilterType={this.clearFilterType}
+                returnActiveFilter={this.returnActiveFilter}
               />
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     )
   }
 };

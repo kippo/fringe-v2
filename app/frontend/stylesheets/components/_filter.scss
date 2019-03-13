@@ -1,0 +1,12 @@
+.filter--multi-select--row {
+  padding: $xxxx-small-unit $xx-small-unit;
+  + .filter--multi-select--row {
+    border-top: $divider;
+  }
+}
+
+.filter--multi-select--label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

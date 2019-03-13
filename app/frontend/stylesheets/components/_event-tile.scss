@@ -1,40 +1,76 @@
+$desktop-tile-breakpoint: 800px;
+
 // Desktop tile
 
 .event-tile__desktop {
   display: flex; 
 
-  .event-tile--image-area {
-    flex: 1 .25 25%;
-  }
-
-  .event-tile--content {
-    padding: 0 $desktop-gutters;
-    margin-right: $desktop-gutters;
-    border-right: $divider;
-    flex: 1 1 75%;
-  }
-
-  .event-tile--aside {
-    flex: 1 0 180px;
-  }
-
-  .favourite-button {
-    z-index: 1;
+  @include media-query($desktop-tile-breakpoint) {
+    display: block;
   }
 }
 
-// Mobile tile
+.event-tile--image-area {
+  flex: 1 .25 25%;
+}
 
-.event-tile__mobile {
-  .event-tile--header {
-    display: flex;
-  }
-
-  .event-tile--actions {
-    margin-top: $x-small-unit;
-    display: flex;
+.event-tile--content {
+  padding: 0 $desktop-gutters;
+  margin-right: $desktop-gutters;
+  border-right: $divider;
+  flex: 1 1 75%;
+  @include media-query($desktop-tile-breakpoint) {
+    border-right: none;
+    margin-right: 0;
+    padding: 0;
   }
 }
+
+.event-tile--aside {
+  flex: 1 0 180px;
+  display: flex;
+  flex-direction: column
+}
+
+.favourite-button {
+  z-index: 1;
+}
+
+.event-tile--promotions {
+  @include media-query($desktop-tile-breakpoint, min) {
+    text-align: center;
+    margin-top: $xxx-small-unit;
+  }
+}
+
+.event-tile--actions {
+  @include media-query($desktop-tile-breakpoint, min) {
+    * + * {
+      margin-top: $xxxxx-small-unit;
+    }
+  }
+  @include media-query($desktop-tile-breakpoint) {
+    order: 1;
+    margin: 0 $xxxxxx-small-unit * -1;
+    display: flex;
+    & > * {
+      margin: 0 $xxxxxx-small-unit;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Compact tile
 

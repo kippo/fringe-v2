@@ -68,7 +68,7 @@
 
     <div class="layout tray-container" data-tray-layout>
 
-      <div class="tray" data-tray>
+      <div data-tray-overlay>
         <nav aria-label="Global Navigation" role="navigation">
           <ul></ul>
         </nav>
@@ -79,9 +79,7 @@
         <header class="header" role="banner">
           <div class="layout--container">
             <%= react_component("FavouriteButton", props: {favCount: 3}) %>
-            <button class="header--menu" aria-label="Toggle menu" data-tray-anchor>
-              <%= icon("hamburger", fill: "#ffffff", width: 25, height: 23) -%>
-            </button>
+            <button title="Open menu" data-tray-button>Toggle menu</button>
           </div>
         </header>
 

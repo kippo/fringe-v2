@@ -45,7 +45,7 @@ body.lightbox-open {
 }
 
 .layout--container {
-  @include container-percentage;
+  @include container;
 }
 
 .layout--main {
