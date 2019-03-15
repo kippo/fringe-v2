@@ -1,21 +1,19 @@
 import Axios from 'axios';
 import React from "react";
+import EventSessionsList from "./events-sessions-list.jsx";
+import EventSessionsContext from "./events-sessions-context.jsx";
 
 export default class EventSessionsWrapper extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      eventData: [],
-      dataLoaded: false
+      eventData: []
     }
     this._isMounted = false;
   }
 
   //Get data from mockaroo, add it to state
   getEvents = () => {
-    this.setState({
-      dataLoaded: false
-    });
     Axios
       .get('https://my.api.mockaroo.com/fringe.json?key=482c6d90', {
         params: this.state.selectedFilters
@@ -26,8 +24,7 @@ export default class EventSessionsWrapper extends React.Component {
       .then((response) => {
         if (this._isMounted) {
           this.setState({
-            eventData: response.data,
-            dataLoaded: true
+            eventData: response.data
           });
         }
       })
@@ -50,27 +47,15 @@ export default class EventSessionsWrapper extends React.Component {
 
   render() {
     return(
-      <ul className="session--list">
-        {this.state.eventData.map((data) =>
-          <li key={data.key} className="session">
-            <div className="session--image">
-              <img src="https://source.unsplash.com/random/200x200" />
-            </div>
-            <div className="session--content">
-              <div className="compressed">
-                <h2 className="heading-six">
-                  <a href="#">{data.title}</a>
-                </h2>
-                <p>{data.time} / {data.date}</p>
-                <p>{data.venue}</p>
-              </div>
-            </div>
-            <div className="session--action">
-              {this.renderSessionStatus(data)}
-            </div>
-          </li>
-        )}
-      </ul>
+      <EventSessionsContext.Provider 
+        value={{
+          renderSessionStatus: this.renderSessionStatus,
+        }}
+      >
+        <EventSessionsList 
+          eventData={this.state.eventData}
+        />
+      </EventSessionsContext.Provider>
     )
   }
 };

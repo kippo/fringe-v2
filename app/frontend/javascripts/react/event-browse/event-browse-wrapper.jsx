@@ -8,7 +8,6 @@ import MultiSelectList from "./filters/filter-controls/multi_select_list.jsx";
 import PriceRange from "./filters/filter-controls/price_range.jsx";
 import DateRange from "./filters/filter-controls/date_range.jsx";
 import VenueSearch from "./filters/filter-controls/venue_search.jsx";
-import EventBrowseContent from "./event-browse-context.jsx";
 
 export default class EventBrowse extends React.Component {  
   constructor(props) {
@@ -359,6 +358,9 @@ export default class EventBrowse extends React.Component {
 
   //Get initial events and set filter state if user moves through history
   componentDidMount() {
+    const React = require('react');
+    console.log(`React Version ${React.version}`);
+
     this._isMounted = true;
     this.setHistory('replace');
     this.getEvents();
